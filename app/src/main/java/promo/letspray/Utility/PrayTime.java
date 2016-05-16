@@ -1,4 +1,4 @@
-package promo.letspray.Utility;
+package promo.letspray.utility;
 
 /**
  * Created by wali on 5/2/2016.

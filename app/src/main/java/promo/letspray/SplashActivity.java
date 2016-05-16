@@ -8,17 +8,14 @@ import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import promo.letspray.Utility.ApplicationUtils;
-import promo.letspray.Utility.PrayTime;
+import promo.letspray.utility.ApplicationUtils;
+import promo.letspray.utility.PrayTime;
 
 public class SplashActivity extends AppCompatActivity implements LocationListener {
     // Location Variables
