@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="4"
-                        android:text="seconds"
+                        android:text="hours"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/dimTex12" />
                 </LinearLayout>
