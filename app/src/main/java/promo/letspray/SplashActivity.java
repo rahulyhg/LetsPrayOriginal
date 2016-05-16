@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
     // Location Variables
 
     private LocationManager locationManager;
-    private final static int DISTANCE_UPDATES = 0;
+    private final static int DISTANCE_UPDATES = 1;
     private final static int TIME_UPDATES = 24*60*60*1000;
     private static final int PERMISSION_REQUEST_CODE = 1;
     double latitude;
