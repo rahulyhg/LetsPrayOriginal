@@ -297,6 +297,7 @@
                 android:layout_height="wrap_content"
                 android:text="Fajr"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
@@ -305,7 +306,8 @@
                 android:layout_height="wrap_content"
                 android:text="10:00am"
                 android:textColor="#ffffff"
-                android:textSize="5sp" />
+                android:textStyle="bold"
+                android:textSize="@dimen/dimTex10" />
         </LinearLayout>
 
         <LinearLayout
@@ -322,6 +324,7 @@
                 android:layout_height="wrap_content"
                 android:text="Duhur"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
@@ -329,6 +332,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:00am"
+                android:textStyle="bold"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/dimTex10" />
         </LinearLayout>
@@ -347,6 +351,7 @@
                 android:layout_height="wrap_content"
                 android:text="Asr"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
@@ -355,6 +360,7 @@
                 android:layout_height="wrap_content"
                 android:text="05:00pm"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
         </LinearLayout>
 
@@ -372,6 +378,7 @@
                 android:layout_height="wrap_content"
                 android:text="Maghrib"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
@@ -380,6 +387,7 @@
                 android:layout_height="wrap_content"
                 android:text="06:30pm"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
         </LinearLayout>
 
@@ -396,6 +404,7 @@
                 android:layout_height="wrap_content"
                 android:text="Isha"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
@@ -404,6 +413,7 @@
                 android:layout_height="wrap_content"
                 android:text="08:30pm"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimTex10" />
         </LinearLayout>
 

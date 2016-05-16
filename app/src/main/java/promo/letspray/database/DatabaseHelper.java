@@ -72,10 +72,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_PRAYER_TIMES,prayer.getPrayerTime());
             db.insert(TABLE_NAME,null,values);
         }
-       /* values.put(COLUMN_PRAYER_NAMES, c.get());
-        values.put(COLUMN_PRAYER_TIMES,c.getPrayerTime());
-
-        */
         long count = db.insert(TABLE_NAME, null, values);
         Log.e("INFO" , "One rowinserter" +count);
         db.close();
