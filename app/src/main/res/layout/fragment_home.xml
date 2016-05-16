@@ -117,6 +117,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
+                    android:id="@+id/tv_prayer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -138,6 +139,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
+                    android:id="@+id/tv_prayer_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -159,6 +161,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
+                    android:id="@+id/tv_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -180,6 +183,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
+                    android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -198,6 +202,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/tv_Ifter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/left_bottom"
@@ -232,6 +237,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/tv_Seheri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/right_bottom"
