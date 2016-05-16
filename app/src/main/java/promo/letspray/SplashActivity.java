@@ -39,7 +39,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         initLocation();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ApplicationUtils.checkPermission(this)) {
             Location location = locationManager.getLastKnownLocation
@@ -55,6 +55,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
             ApplicationUtils.requestPermission(this);
         }
     }
+
     /**
      * Monitor for location changes
      *
@@ -66,6 +67,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         setPrayerTImes(location.getLatitude(), location.getLongitude());
 
     }
+
     /**
      * GPS turned off, stop watching for updates.
      *
@@ -79,6 +81,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
             ApplicationUtils.requestPermission(this);
         }
     }
+
     /**
      * GPS turned back on, re-enable monitoring
      *
@@ -92,11 +95,13 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
             ApplicationUtils.requestPermission(this);
         }
     }
+
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         // TODO Auto-generated method stub
 
     }
+
     /**
      * Monitor for permission changes.
      *
@@ -153,6 +158,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
 
         for (int i = 0; i < prayerTimes.size(); i++) {
             //Add Prayer time in Database or SHared Preference Here
+            Log.e("Prayer Time", prayerNames.get(i).toString() + " " + prayerTimes.get(i).toString());
         }
     }
 
