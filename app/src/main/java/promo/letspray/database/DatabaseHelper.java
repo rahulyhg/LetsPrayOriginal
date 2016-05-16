@@ -15,12 +15,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION =1;
 
     //  Database name
-    static String DATABASE_NAME = "database_name";
+    static String DATABASE_NAME = "prayerDB";
 
     //  Table Name
-    public static final String TABLE_NAME = "table_name";
+    private static final String TABLE_NAME = "prayer";
 
     //  fields for table
+
+    public static final String ID = "id";
+    public static final String PRAYER_TIMES = "name";
+    public static final String PRAYER_NAMES = "salary";
+
+    //  Table create
+
+    public static final String
+            TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + "(" + ID
+            + " INTEGER PRIMARY KEY autoincrement, " + PRAYER_TIMES
+            + " TEXT, " + PRAYER_NAMES + " TEXT)";
+
 
     //  required resources to manage database
 
@@ -34,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(TABLE_CREATE);
     }
 
     @Override
