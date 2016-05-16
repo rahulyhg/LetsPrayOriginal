@@ -1,6 +1,7 @@
 package promo.letspray;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import promo.letspray.Model.Prayer;
+import promo.letspray.database.DatabaseHelper;
 import promo.letspray.utility.ApplicationUtils;
 import promo.letspray.utility.PrayTime;
 
@@ -21,11 +24,14 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
     // Location Variables
 
     private LocationManager locationManager;
-    private final static int DISTANCE_UPDATES = 1;
-    private final static int TIME_UPDATES = 5;
+    private final static int DISTANCE_UPDATES = 0;
+    private final static int TIME_UPDATES = 24*60*60*1000;
     private static final int PERMISSION_REQUEST_CODE = 1;
     double latitude;
     double longitude;
+
+    // Database helper
+    DatabaseHelper helper = new DatabaseHelper(this);
 
 
     @Override
@@ -153,10 +159,20 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
                 longitude, timezone);
         ArrayList prayerNames = prayers.getTimeNames();
 
+        ArrayList<Prayer> prayerList = new ArrayList<>();
         for (int i = 0; i < prayerTimes.size(); i++) {
-            //Add Prayer time in Database or SHared Preference Here
-            Log.e("Prayer Time", prayerNames.get(i).toString() + " " + prayerTimes.get(i).toString());
-        }
-    }
+            //Add Prayer time in Database
 
+            Log.e("Prayer Time", prayerNames.get(i).toString() + " " + prayerTimes.get(i).toString());
+            Prayer prayer = new Prayer();
+            prayer.setPrayerName((String) prayerNames.get(i));
+            prayer.setPrayerTime((String) prayerTimes.get(i));
+            prayerList.add(prayer);
+        }
+        helper.insertPrayer(prayerList);
+
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+
+    }
 }
