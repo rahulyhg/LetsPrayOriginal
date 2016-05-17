@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/afternoon"
-    tools:context="promo.letspray.fragment.HomeFragment">
+    tools:context="promo.letspray.fragment.HomeFragment"
+    android:id="@+id/ui_relative_layout">
 
     <RelativeLayout
         android:id="@+id/rlTop"

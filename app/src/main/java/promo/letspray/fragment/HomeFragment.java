@@ -1,16 +1,19 @@
 package promo.letspray.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import promo.letspray.R;
+import promo.letspray.utility.ApplicationUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +39,9 @@ public class HomeFragment extends Fragment {
     TextView tv_second;
     LinearLayout ifter_linearlayout;
     LinearLayout seheri_linearlayout;
+    public RelativeLayout relativeLayout;
+    private int day_state=0;
+
 
 
 
@@ -54,6 +60,14 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        day_state= promo.letspray.utility.ApplicationUtils.getDayState();
+
+
+
+
+
+       // Log.e("Time", day_state+"");
+
     }
 
     @Override
@@ -64,10 +78,11 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view,  Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
     }
+
 
     private void initUI(View view){
 
@@ -89,5 +104,26 @@ public class HomeFragment extends Fragment {
         tv_second=(TextView)view.findViewById(R.id.tvSecond);
         ifter_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Ifter);
         seheri_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Seheri);
+        relativeLayout=(RelativeLayout)view.findViewById(R.id.ui_relative_layout);
+        setBackground();
+
+    }
+
+    private void setBackground(){
+        switch(day_state){
+            case ApplicationUtils.MORNING:
+                relativeLayout.setBackgroundResource(R.drawable.morning);
+                //setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(android.R.color.white));
+
+                break;
+            case ApplicationUtils.NOON:
+                relativeLayout.setBackgroundResource(R.drawable.afternoon);
+                break;
+            case ApplicationUtils.EVENING:
+                relativeLayout.setBackgroundResource(R.drawable.evening);
+            case ApplicationUtils.NIGHT:
+                relativeLayout.setBackgroundResource(R.drawable.night);
+
+        }
     }
 }
