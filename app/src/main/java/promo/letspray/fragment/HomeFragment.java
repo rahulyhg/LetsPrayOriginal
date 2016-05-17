@@ -1,16 +1,22 @@
 package promo.letspray.fragment;
 
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import promo.letspray.MainActivity;
 import promo.letspray.R;
 import promo.letspray.Utility.ApplicationUtils;
 
@@ -61,10 +67,6 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         day_state= promo.letspray.Utility.ApplicationUtils.getDayState();
 
-
-
-
-
        // Log.e("Time", day_state+"");
 
     }
@@ -104,23 +106,28 @@ public class HomeFragment extends Fragment {
         ifter_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Ifter);
         seheri_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Seheri);
         relativeLayout=(RelativeLayout)view.findViewById(R.id.ui_relative_layout);
+
+
+
         setBackgroundNdBarColor();
 
     }
 
     private void setBackgroundNdBarColor(){
+
         switch(day_state){
             case ApplicationUtils.MORNING:
                 relativeLayout.setBackgroundResource(R.drawable.morning);
-                //setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(android.R.color.white));
-
                 break;
             case ApplicationUtils.NOON:
                 relativeLayout.setBackgroundResource(R.drawable.afternoon);
+                getActivity().setTheme(R.style.AfterNoonTheme);
                 break;
             case ApplicationUtils.EVENING:
                 relativeLayout.setBackgroundResource(R.drawable.evening);
+                getActivity().setTheme(R.style.EveningTheme);
             case ApplicationUtils.NIGHT:
+                getActivity().setTheme(R.style.NightTheme);
                 relativeLayout.setBackgroundResource(R.drawable.night);
 
         }
