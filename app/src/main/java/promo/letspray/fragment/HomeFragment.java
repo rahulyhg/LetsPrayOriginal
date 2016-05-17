@@ -1,7 +1,6 @@
 package promo.letspray.fragment;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 
 import promo.letspray.R;
-import promo.letspray.utility.ApplicationUtils;
+import promo.letspray.Utility.ApplicationUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +59,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        day_state= promo.letspray.utility.ApplicationUtils.getDayState();
+        day_state= promo.letspray.Utility.ApplicationUtils.getDayState();
 
 
 
@@ -105,11 +104,11 @@ public class HomeFragment extends Fragment {
         ifter_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Ifter);
         seheri_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Seheri);
         relativeLayout=(RelativeLayout)view.findViewById(R.id.ui_relative_layout);
-        setBackground();
+        setBackgroundNdBarColor();
 
     }
 
-    private void setBackground(){
+    private void setBackgroundNdBarColor(){
         switch(day_state){
             case ApplicationUtils.MORNING:
                 relativeLayout.setBackgroundResource(R.drawable.morning);

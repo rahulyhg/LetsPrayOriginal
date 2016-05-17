@@ -17,8 +17,8 @@ import java.util.Date;
 
 import promo.letspray.Model.Prayer;
 import promo.letspray.database.DatabaseHelper;
-import promo.letspray.utility.ApplicationUtils;
-import promo.letspray.utility.PrayTime;
+import promo.letspray.Utility.ApplicationUtils;
+import promo.letspray.Utility.PrayTime;
 
 public class SplashActivity extends AppCompatActivity implements LocationListener {
     // Location Variables

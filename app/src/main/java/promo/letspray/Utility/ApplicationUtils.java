@@ -1,4 +1,4 @@
-package promo.letspray.utility;
+package promo.letspray.Utility;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,12 +7,23 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 /**
  * Created by ppobd_six on 5/15/2016.
  */
 public class ApplicationUtils {
 
+
+
+
     public static final int PERMISSION_REQUEST_CODE = 1;
+    public static final int MORNING = 5;
+    public static final int NOON = 9;
+    public static final int EVENING = 16;
+    public static final int NIGHT = 18;
+
+
 
     /**
      * See if we have permissionf or locations
@@ -28,6 +39,7 @@ public class ApplicationUtils {
             return false;
         }
     }
+
     /**
      * Request permissions from the user
      */
@@ -43,5 +55,28 @@ public class ApplicationUtils {
         }
     }
 
+    public static int getDayState() {
 
+
+
+
+
+        Calendar calendar = Calendar.getInstance();
+        int time = calendar.get(Calendar.HOUR_OF_DAY);
+        if (MORNING <= time && time < NOON) {
+
+            return MORNING;
+        } else if (NOON <= time && time < EVENING) {
+            return NOON;
+        } else if (EVENING <= time && time < NIGHT) {
+
+            return EVENING;
+
+        } else {
+            return NIGHT;
+        }
+
+
+
+    }
 }
