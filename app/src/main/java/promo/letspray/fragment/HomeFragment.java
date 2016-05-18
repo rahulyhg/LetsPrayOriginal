@@ -4,13 +4,18 @@ package promo.letspray.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import promo.letspray.Model.Prayer;
 import promo.letspray.R;
+import promo.letspray.database.DatabaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,9 +44,6 @@ public class HomeFragment extends Fragment {
 
 
 
-
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -54,6 +56,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Reading all contacts
     }
 
     @Override
@@ -61,12 +64,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
+        setPrayerTime();
     }
 
     private void initUI(View view){
@@ -90,4 +95,29 @@ public class HomeFragment extends Fragment {
         ifter_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Ifter);
         seheri_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Seheri);
     }
+
+    public void setPrayerTime(){
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+        ArrayList<Prayer> contacts = databaseHelper.getPrayer();
+        for (int i = 0; i < contacts.size(); i++) {
+            if (i == 0) {
+                tv_Fajr_Time.setText(contacts.get(i).getPrayerTime().toString());
+            }
+            if(i == 1){
+                tv_Dhur_Time.setText(contacts.get(i).getPrayerTime().toString());
+            }
+            if(i == 2){
+                tv_Asr_Time.setText(contacts.get(i).getPrayerTime().toString());
+            }
+            if(i == 3){
+                tv_Maghrib_Time.setText(contacts.get(i).getPrayerTime().toString());
+            }
+            if(i == 4){
+                tv_Isa_Time.setText(contacts.get(i).getPrayerTime().toString());
+            }
+
+        }
+    }
+
 }

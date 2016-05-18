@@ -6,9 +6,12 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ import promo.letspray.utility.PrayTime;
 public class SplashActivity extends AppCompatActivity implements LocationListener {
     // Location Variables
 
+    private CoordinatorLayout coordinatorLayout;
     private LocationManager locationManager;
     private final static int DISTANCE_UPDATES = 1;
     private final static int TIME_UPDATES = 24*60*60*1000;
@@ -38,7 +42,8 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                .coordinatorLayout);
         initLocation();
     }
 
@@ -67,8 +72,19 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
     @Override
     public void onLocationChanged(Location location) {
 
-        setPrayerTImes(location.getLatitude(), location.getLongitude());
-
+        if(location != null){
+            setPrayerTImes(location.getLatitude(), location.getLongitude());
+        }else{
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
+                    .setAction("RETRY", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                         //   setPrayerTImes(location.getLatitude(), location.getLongitude());
+                        }
+                    });
+            snackbar.show();
+        }
     }
 
     /**
@@ -160,14 +176,18 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         ArrayList prayerNames = prayers.getTimeNames();
 
         ArrayList<Prayer> prayerList = new ArrayList<>();
-        for (int i = 0; i < prayerTimes.size(); i++) {
-            //Add Prayer time in Database
+        for (int i = 0; i < prayerNames.size(); i++) {
 
-            Log.e("Prayer Time", prayerNames.get(i).toString() + " " + prayerTimes.get(i).toString());
-            Prayer prayer = new Prayer();
-            prayer.setPrayerName((String) prayerNames.get(i));
-            prayer.setPrayerTime((String) prayerTimes.get(i));
-            prayerList.add(prayer);
+            //Add Prayer time in Database
+            if(i!=1 && i!=4) {
+                Log.e("Prayer Time", prayerNames.get(i).toString() + " " + prayerTimes.get(i).toString());
+                Prayer prayer = new Prayer();
+                prayer.setPrayerName((String) prayerNames.get(i));
+                prayer.setPrayerTime((String) prayerTimes.get(i));
+                prayerList.add(prayer);
+            }else{
+                continue;
+            }
         }
         helper.insertPrayer(prayerList);
 
@@ -175,4 +195,5 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         startActivity(i);
 
     }
+
 }
