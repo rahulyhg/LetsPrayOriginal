@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity{
         setDrawerHeaderContent();
         setTheme(R.style.MorningTheme);
 
-
-
-
     }
 
     private void initUI() {
@@ -64,6 +61,7 @@ public class MainActivity extends AppCompatActivity{
     private void initActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
 
@@ -73,7 +71,10 @@ public class MainActivity extends AppCompatActivity{
         rlNavHeaderContent = (RelativeLayout) headerView.findViewById(R.id.rlNavHeaderContent);
         mDrawerToggle = setupDrawerToggle();
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-        dlMain.setDrawerListener(mDrawerToggle);
+        //dlMain.setDrawerListener(mDrawerToggle);
+        dlMain.addDrawerListener(mDrawerToggle);
+        // Drawer icon changed
+        mDrawerToggle.syncState();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
