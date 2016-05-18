@@ -15,7 +15,14 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.StringTokenizer;
+
 import promo.letspray.Model.Prayer;
 import promo.letspray.R;
 import promo.letspray.database.DatabaseHelper;
@@ -51,6 +58,13 @@ public class HomeFragment extends Fragment {
     private int day_state=0;
 
 
+    //Prayer names
+    public String fazar_time;
+    public int duhur_time;
+    public int asr_time;
+    public int magrb_time;
+    public int isha_time;
+
 
 
     public HomeFragment() {
@@ -85,10 +99,14 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
         setPrayerTime();
+        setDate();
+        setDay();
+        //setNextPrayerTime();
     }
 
 
     private void initUI(View view){
+
 
         tv_Fajr_Time=(TextView)view.findViewById(R.id.tv_fajr_time);
         tv_Asr_Time=(TextView)view.findViewById(R.id.tv_asr_time);
@@ -109,7 +127,6 @@ public class HomeFragment extends Fragment {
         ifter_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Ifter);
         seheri_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Seheri);
         relativeLayout=(RelativeLayout)view.findViewById(R.id.ui_relative_layout);
-
 
         setBackgroundNdBarColor();
 
@@ -135,12 +152,30 @@ public class HomeFragment extends Fragment {
         }
     }
 
+//    private void setNextPrayerTime(){
+//        Calendar calendar = Calendar.getInstance();
+//        int hour=calendar.get(Calendar.HOUR_OF_DAY);
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+//
+//        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+//        ArrayList<Prayer> contacts = databaseHelper.getPrayer();
+//        for(int i=0;i<contacts.size();i++){
+//            if(i==0){
+//                fazar_time = contacts.get(i).getPrayerTime().toString();
+//                int hour1 = Integer.parseInt(fazar_time.substring(0, 2));
+//                Log.e("HELLLLLLOOOOO", String.valueOf(hour1));
+//            }
+//        }
+//    }
+
     public void setPrayerTime(){
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
         ArrayList<Prayer> contacts = databaseHelper.getPrayer();
         for (int i = 0; i < contacts.size(); i++) {
             if (i == 0) {
+
                 tv_Fajr_Time.setText(contacts.get(i).getPrayerTime().toString());
             }
             if(i == 1){
@@ -157,6 +192,21 @@ public class HomeFragment extends Fragment {
             }
 
         }
+
+    }
+
+    public void setDate(){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy ");
+        String strDate = mdformat.format(calendar.getTime());
+        tv_prayer_date.setText(strDate);
+    }
+
+    public void setDay(){
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+        tv_day_name.setText(dayOfTheWeek);
     }
 
 }

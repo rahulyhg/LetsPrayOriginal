@@ -57,10 +57,6 @@ public class ApplicationUtils {
 
     public static int getDayState() {
 
-
-
-
-
         Calendar calendar = Calendar.getInstance();
         int time = calendar.get(Calendar.HOUR_OF_DAY);
         if (MORNING <= time && time < NOON) {
@@ -75,7 +71,6 @@ public class ApplicationUtils {
         } else {
             return NIGHT;
         }
-
 
 
     }
