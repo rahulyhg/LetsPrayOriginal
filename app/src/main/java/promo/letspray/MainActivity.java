@@ -1,12 +1,15 @@
 package promo.letspray;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +22,7 @@ import android.widget.TextView;
 
 import promo.letspray.fragment.HomeFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     DrawerLayout dlMain;
     ActionBarDrawerToggle mDrawerToggle;
@@ -43,13 +46,20 @@ public class MainActivity extends AppCompatActivity {
         initFragmentManager();
         setupDrawerContent();
         setDrawerHeaderContent();
+        setTheme(R.style.MorningTheme);
+
+
+
+
     }
 
     private void initUI() {
         dlMain = (DrawerLayout) findViewById(R.id.dlMain);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         nvDrawer = (NavigationView) findViewById(R.id.nvDrawer);
+
     }
+
 
     private void initActionBar() {
         setSupportActionBar(toolbar);

@@ -1,21 +1,27 @@
 package promo.letspray.fragment;
 
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import promo.letspray.Model.Prayer;
 import promo.letspray.R;
 import promo.letspray.database.DatabaseHelper;
+import promo.letspray.MainActivity;
+import promo.letspray.R;
+import promo.letspray.utility.ApplicationUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +47,9 @@ public class HomeFragment extends Fragment {
     TextView tv_second;
     LinearLayout ifter_linearlayout;
     LinearLayout seheri_linearlayout;
+    public RelativeLayout relativeLayout;
+    private int day_state=0;
+
 
 
 
@@ -57,6 +66,10 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Reading all contacts
+        day_state= promo.letspray.utility.ApplicationUtils.getDayState();
+
+       // Log.e("Time", day_state+"");
+
     }
 
     @Override
@@ -68,11 +81,12 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view,  Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
         setPrayerTime();
     }
+
 
     private void initUI(View view){
 
@@ -94,6 +108,31 @@ public class HomeFragment extends Fragment {
         tv_second=(TextView)view.findViewById(R.id.tvSecond);
         ifter_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Ifter);
         seheri_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Seheri);
+        relativeLayout=(RelativeLayout)view.findViewById(R.id.ui_relative_layout);
+
+
+        setBackgroundNdBarColor();
+
+    }
+
+    private void setBackgroundNdBarColor(){
+
+        switch(day_state){
+            case ApplicationUtils.MORNING:
+                relativeLayout.setBackgroundResource(R.drawable.morning);
+                break;
+            case ApplicationUtils.NOON:
+                relativeLayout.setBackgroundResource(R.drawable.afternoon);
+                getActivity().setTheme(R.style.AfterNoonTheme);
+                break;
+            case ApplicationUtils.EVENING:
+                relativeLayout.setBackgroundResource(R.drawable.evening);
+                getActivity().setTheme(R.style.EveningTheme);
+            case ApplicationUtils.NIGHT:
+                getActivity().setTheme(R.style.NightTheme);
+                relativeLayout.setBackgroundResource(R.drawable.night);
+
+        }
     }
 
     public void setPrayerTime(){

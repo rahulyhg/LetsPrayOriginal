@@ -1,4 +1,4 @@
-package promo.letspray.utility;
+package promo.letspray.Utility;
 
 /**
  * Created by wali on 5/2/2016.
@@ -36,9 +36,9 @@ public class PrayTime {
     public int Hanafi; // Hanafi
     // Adjusting Methods for Higher Latitudes
     public int None; // No adjustment
-    public int MidNight; // middle of night
-    public int OneSeventh; // 1/7th of night
-    public int AngleBased; // angle/60th of night
+    public int MidNight; // middle of NIGHT
+    public int OneSeventh; // 1/7th of NIGHT
+    public int AngleBased; // angle/60th of NIGHT
     // Time Formats
     public int Time24; // 24-hour format
     public int Time12; // 12-hour format
@@ -80,9 +80,9 @@ public class PrayTime {
 
 // Adjusting Methods for Higher Latitudes
         this.setNone(0); // No adjustment
-        this.setMidNight(1); // middle of night
-        this.setOneSeventh(2); // 1/7th of night
-        this.setAngleBased(3); // angle/60th of night
+        this.setMidNight(1); // middle of NIGHT
+        this.setOneSeventh(2); // 1/7th of NIGHT
+        this.setAngleBased(3); // angle/60th of NIGHT
 
 // Time Formats
         this.setTime24(0); // 24-hour format
@@ -625,7 +625,7 @@ public class PrayTime {
         return times;
     }
 
-    // the night portion used for adjusting times in higher latitudes
+    // the NIGHT portion used for adjusting times in higher latitudes
     private double nightPortion(double angle) {
         double calc = 0;
 
