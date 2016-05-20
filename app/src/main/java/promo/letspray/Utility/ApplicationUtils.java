@@ -7,7 +7,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by ppobd_six on 5/15/2016.
@@ -73,5 +76,16 @@ public class ApplicationUtils {
         }
 
 
+    }
+
+    public static Date formatDate(String inputDate, SimpleDateFormat sdFormat) {
+        Date dt = null;
+        try {
+            dt = sdFormat.parse(inputDate);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return dt;
     }
 }

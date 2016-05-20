@@ -57,13 +57,16 @@ public class HomeFragment extends Fragment {
     public RelativeLayout relativeLayout;
     private int day_state=0;
 
-
+    //current time
+    public int current_hour;
+    public int current_min;
     //Prayer names
-    public String fazar_time;
-    public int duhur_time;
-    public int asr_time;
-    public int magrb_time;
-    public int isha_time;
+    public String fajar_time;
+    public String sunrise_time;
+    public String duhur_time;
+    public String asr_time;
+    public String magrib_time;
+    public String isha_time;
 
 
 
@@ -101,7 +104,7 @@ public class HomeFragment extends Fragment {
         setPrayerTime();
         setDate();
         setDay();
-        //setNextPrayerTime();
+      //  setNextPrayerTime();
     }
 
 
@@ -154,19 +157,34 @@ public class HomeFragment extends Fragment {
 
 //    private void setNextPrayerTime(){
 //        Calendar calendar = Calendar.getInstance();
-//        int hour=calendar.get(Calendar.HOUR_OF_DAY);
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+//        long currentTimeMs = calendar.getTimeInMillis();
 //
 //        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
 //        ArrayList<Prayer> contacts = databaseHelper.getPrayer();
 //        for(int i=0;i<contacts.size();i++){
 //            if(i==0){
-//                fazar_time = contacts.get(i).getPrayerTime().toString();
-//                int hour1 = Integer.parseInt(fazar_time.substring(0, 2));
-//                Log.e("HELLLLLLOOOOO", String.valueOf(hour1));
+//                String a = contacts.get(i).getPrayerTime().toString();
+//                fajar_time = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+" "+a;
+//            }
+//            if(i==1){
+//                String sunrise = contacts.get(i).getPrayerTime().toString();
+//            }
+//            if(i==2){
+//                String duhur = contacts.get(i).getPrayerTime().toString();
+//            }
+//            if(i==3){
+//                String asr = contacts.get(i).getPrayerTime().toString();
+//            }
+//            if(i==4){
+//                String magrib = contacts.get(i).getPrayerTime().toString();
+//            }
+//            if(i==5){
+//                String isha = contacts.get(i).getPrayerTime().toString();
 //            }
 //        }
+//
+//
+//
 //    }
 
     public void setPrayerTime(){
@@ -178,16 +196,19 @@ public class HomeFragment extends Fragment {
 
                 tv_Fajr_Time.setText(contacts.get(i).getPrayerTime().toString());
             }
-            if(i == 1){
+
+            //index 1  sunrise
+
+            if(i == 2){
                 tv_Dhur_Time.setText(contacts.get(i).getPrayerTime().toString());
             }
-            if(i == 2){
+            if(i == 3){
                 tv_Asr_Time.setText(contacts.get(i).getPrayerTime().toString());
             }
-            if(i == 3){
+            if(i == 4){
                 tv_Maghrib_Time.setText(contacts.get(i).getPrayerTime().toString());
             }
-            if(i == 4){
+            if(i == 5){
                 tv_Isa_Time.setText(contacts.get(i).getPrayerTime().toString());
             }
 

@@ -179,7 +179,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         for (int i = 0; i < prayerNames.size(); i++) {
 
             //Add Prayer time in Database
-            if(i!=1 && i!=4) {
+            if(i!=4) {
                 Log.e("Prayer Time", prayerNames.get(i).toString() + " " + prayerTimes.get(i).toString());
                 Prayer prayer = new Prayer();
                 prayer.setPrayerName((String) prayerNames.get(i));
