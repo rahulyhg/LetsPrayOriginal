@@ -1,33 +1,24 @@
 package promo.letspray.fragment;
 
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.StringTokenizer;
 
 import promo.letspray.Model.Prayer;
 import promo.letspray.R;
 import promo.letspray.database.DatabaseHelper;
-import promo.letspray.MainActivity;
-import promo.letspray.R;
 import promo.letspray.utility.ApplicationUtils;
 
 /**
@@ -36,39 +27,17 @@ import promo.letspray.utility.ApplicationUtils;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    TextView  tv_Fajr_Time;
-    TextView tv_Dhur_Time;
-    TextView tv_Asr_Time;
-    TextView tv_Maghrib_Time;
-    TextView tv_Isa_Time;
-    TextView tv_hadith_of_the_Day;
-    TextView tv_more;
-    TextView tv_ifter_time;
-    TextView tv_seheri_time;
-    TextView tv_prayer_name;
-    TextView tv_prayer_time;
-    TextView tv_day_name;
-    TextView tv_prayer_date;
-    TextView tv_hour;
-    TextView tv_miniute;
-    TextView tv_second;
-    LinearLayout ifter_linearlayout;
-    LinearLayout seheri_linearlayout;
-    public RelativeLayout relativeLayout;
-    private int day_state=0;
+    TextView tvFajrTime, tvDohrTime, tvAsrTime, tvMaghribTime, tvIshaTime, tvHadithFull, tv_more,
+            tvIfterTime, tvSehriTIme, tvNextPrayer, tvNextPrayTime, tvWeekDay, tvDate, tvHour,
+            tvMinute, tvSecond;
+    LinearLayout llIfter, llSehri;
+    RelativeLayout rlFragmentBg;
 
-    //current time
-    public int current_hour;
-    public int current_min;
-    //Prayer names
-    public String fajar_time;
-    public String sunrise_time;
-    public String duhur_time;
-    public String asr_time;
-    public String magrib_time;
-    public String isha_time;
+    long fazrWaqtMs, sunriseMs, dohrWaqtMs, asrWaqtMs, maghribWaqtMs, maghribEnd, ishaWaqtMs;
+    Prayer currentPrayer = new Prayer();
+    Prayer nextPrayer = new Prayer();
 
-
+    int day_state = 0;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -83,9 +52,9 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Reading all contacts
-        day_state= promo.letspray.utility.ApplicationUtils.getDayState();
+        day_state = promo.letspray.utility.ApplicationUtils.getDayState();
 
-       // Log.e("Time", day_state+"");
+        // Log.e("Time", day_state+"");
 
     }
 
@@ -98,136 +67,153 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view,  Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
         setPrayerTime();
         setDate();
         setDay();
-      //  setNextPrayerTime();
+        setNextPrayerTime();
     }
 
 
-    private void initUI(View view){
-
-
-        tv_Fajr_Time=(TextView)view.findViewById(R.id.tv_fajr_time);
-        tv_Asr_Time=(TextView)view.findViewById(R.id.tv_asr_time);
-        tv_Dhur_Time=(TextView)view.findViewById(R.id.tv_duhur_time);
-        tv_Maghrib_Time=(TextView)view.findViewById(R.id.tv_maghrib_time);
-        tv_Isa_Time=(TextView)view.findViewById(R.id.tv_isa_time);
-        tv_hadith_of_the_Day=(TextView)view.findViewById(R.id.tvHaditFull);
-        tv_more=(TextView)view.findViewById(R.id.tvMore);
-        tv_ifter_time=(TextView)view.findViewById(R.id.tvIftarTime);
-        tv_seheri_time=(TextView)view.findViewById(R.id.tvSeheriTime);
-        tv_prayer_name=(TextView)view.findViewById(R.id.tv_prayer_name);
-        tv_prayer_time=(TextView)view.findViewById(R.id.tv_prayer_time);
-        tv_day_name=(TextView)view.findViewById(R.id.tv_day);
-        tv_prayer_date=(TextView)view.findViewById(R.id.tv_date);
-        tv_hour=(TextView)view.findViewById(R.id.tvHour);
-        tv_miniute=(TextView)view.findViewById(R.id.tvMinute);
-        tv_second=(TextView)view.findViewById(R.id.tvSecond);
-        ifter_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Ifter);
-        seheri_linearlayout=(LinearLayout)view.findViewById(R.id.tv_Seheri);
-        relativeLayout=(RelativeLayout)view.findViewById(R.id.ui_relative_layout);
+    private void initUI(View view) {
+        tvFajrTime = (TextView) view.findViewById(R.id.tvFajrTime);
+        tvAsrTime = (TextView) view.findViewById(R.id.tvAsrTime);
+        tvDohrTime = (TextView) view.findViewById(R.id.tvDohrTime);
+        tvMaghribTime = (TextView) view.findViewById(R.id.tvMaghribTime);
+        tvIshaTime = (TextView) view.findViewById(R.id.tvIshaTime);
+        tvHadithFull = (TextView) view.findViewById(R.id.tvHadithFull);
+        tv_more = (TextView) view.findViewById(R.id.tvMore);
+        tvIfterTime = (TextView) view.findViewById(R.id.tvIftarTime);
+        tvSehriTIme = (TextView) view.findViewById(R.id.tvSeheriTime);
+        tvNextPrayer = (TextView) view.findViewById(R.id.tvNextPrayer);
+        tvNextPrayTime = (TextView) view.findViewById(R.id.tvNextPrayTime);
+        tvWeekDay = (TextView) view.findViewById(R.id.tvWeekDay);
+        tvDate = (TextView) view.findViewById(R.id.tvDate);
+        tvHour = (TextView) view.findViewById(R.id.tvHour);
+        tvMinute = (TextView) view.findViewById(R.id.tvMinute);
+        tvSecond = (TextView) view.findViewById(R.id.tvSecond);
+        llIfter = (LinearLayout) view.findViewById(R.id.llIfter);
+        llSehri = (LinearLayout) view.findViewById(R.id.llSehri);
+        rlFragmentBg = (RelativeLayout) view.findViewById(R.id.rlFragmentBg);
 
         setBackgroundNdBarColor();
 
     }
 
-    private void setBackgroundNdBarColor(){
+    private void setBackgroundNdBarColor() {
 
-        switch(day_state){
+        switch (day_state) {
             case ApplicationUtils.MORNING:
-                relativeLayout.setBackgroundResource(R.drawable.morning);
+                rlFragmentBg.setBackgroundResource(R.drawable.morning);
                 break;
             case ApplicationUtils.NOON:
-                relativeLayout.setBackgroundResource(R.drawable.afternoon);
+                rlFragmentBg.setBackgroundResource(R.drawable.afternoon);
                 getActivity().setTheme(R.style.AfterNoonTheme);
                 break;
             case ApplicationUtils.EVENING:
-                relativeLayout.setBackgroundResource(R.drawable.evening);
+                rlFragmentBg.setBackgroundResource(R.drawable.evening);
                 getActivity().setTheme(R.style.EveningTheme);
             case ApplicationUtils.NIGHT:
                 getActivity().setTheme(R.style.NightTheme);
-                relativeLayout.setBackgroundResource(R.drawable.night);
+                rlFragmentBg.setBackgroundResource(R.drawable.night);
 
         }
     }
 
-//    private void setNextPrayerTime(){
-//        Calendar calendar = Calendar.getInstance();
-//        long currentTimeMs = calendar.getTimeInMillis();
-//
-//        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
-//        ArrayList<Prayer> contacts = databaseHelper.getPrayer();
-//        for(int i=0;i<contacts.size();i++){
-//            if(i==0){
-//                String a = contacts.get(i).getPrayerTime().toString();
-//                fajar_time = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+" "+a;
-//            }
-//            if(i==1){
-//                String sunrise = contacts.get(i).getPrayerTime().toString();
-//            }
-//            if(i==2){
-//                String duhur = contacts.get(i).getPrayerTime().toString();
-//            }
-//            if(i==3){
-//                String asr = contacts.get(i).getPrayerTime().toString();
-//            }
-//            if(i==4){
-//                String magrib = contacts.get(i).getPrayerTime().toString();
-//            }
-//            if(i==5){
-//                String isha = contacts.get(i).getPrayerTime().toString();
-//            }
-//        }
-//
-//
-//
-//    }
+    private void setNextPrayerTime() {
+        Calendar calendar = Calendar.getInstance();
+        long currentTimeMs = calendar.getTimeInMillis();
+        Log.e("CurrentTime",currentTimeMs+"");
+        if(currentTimeMs < fazrWaqtMs){
+            //nextPrayer Fazr
+            setNextPrayer("Fazr",tvFajrTime.getText().toString());
+            setCountDown(fazrWaqtMs);
 
-    public void setPrayerTime(){
+        }else if(currentTimeMs>=fazrWaqtMs&&currentTimeMs<sunriseMs){
+            //currentPrayer Fazr
+        }else if(currentTimeMs>=sunriseMs&&currentTimeMs<dohrWaqtMs){
+            //nextPrayer Dohr
+        }else if(currentTimeMs>=dohrWaqtMs&&currentTimeMs<asrWaqtMs){
+            //currentPrayer Dohr
+            //nextPrayer Asr
+        }else if(currentTimeMs>=asrWaqtMs&&currentTimeMs<maghribWaqtMs){
+            //currentPrayer Asr
+            //nextPrayer Maghrib
+        }else if(currentTimeMs>=maghribWaqtMs&&currentTimeMs<maghribEnd){
+            //currentPrayer Maghrib
+            //nextPrayer Isha
+        }else if(currentTimeMs>=maghribEnd&&currentTimeMs<ishaWaqtMs){
+            //nextPrayer Isha
+        }else if (currentTimeMs>=ishaWaqtMs){
+            //currentPrayer Isha
+        }
+
+    }
+
+    public void setPrayerTime() {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
-        ArrayList<Prayer> contacts = databaseHelper.getPrayer();
-        for (int i = 0; i < contacts.size(); i++) {
+        ArrayList<Prayer> prayers = databaseHelper.getPrayer();
+        for (int i = 0; i < prayers.size(); i++) {
             if (i == 0) {
-
-                tv_Fajr_Time.setText(contacts.get(i).getPrayerTime().toString());
+                tvFajrTime.setText(prayers.get(i).getPrayerTime().toString());
+                fazrWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
+                Log.e("Fajr In Ms", fazrWaqtMs +"");
             }
-
-            //index 1  sunrise
-
-            if(i == 2){
-                tv_Dhur_Time.setText(contacts.get(i).getPrayerTime().toString());
+            if (i == 1) {
+                sunriseMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
+                Log.e("Sunruse In Ms", sunriseMs+"");
             }
-            if(i == 3){
-                tv_Asr_Time.setText(contacts.get(i).getPrayerTime().toString());
+            if (i == 2) {
+                tvDohrTime.setText(prayers.get(i).getPrayerTime().toString());
+                dohrWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
+                Log.e("Dohr In Ms", dohrWaqtMs+"");
             }
-            if(i == 4){
-                tv_Maghrib_Time.setText(contacts.get(i).getPrayerTime().toString());
+            if (i == 3) {
+                tvAsrTime.setText(prayers.get(i).getPrayerTime().toString());
+                asrWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
+                Log.e("Asr In Ms", asrWaqtMs+"");
             }
-            if(i == 5){
-                tv_Isa_Time.setText(contacts.get(i).getPrayerTime().toString());
+            if (i == 4) {
+                tvMaghribTime.setText(prayers.get(i).getPrayerTime().toString());
+                maghribWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
+                Log.e("Maghrib In Ms", maghribWaqtMs+"");
+                maghribEnd = maghribWaqtMs+1000*60;
+                Log.e("Maghrib End", maghribEnd+"");
+            }
+            if (i == 5) {
+                tvIshaTime.setText(prayers.get(i).getPrayerTime().toString());
+                ishaWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
+                Log.e("Isha In Ms", ishaWaqtMs+"");
             }
 
         }
 
     }
 
-    public void setDate(){
+    public void setDate() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy ");
         String strDate = mdformat.format(calendar.getTime());
-        tv_prayer_date.setText(strDate);
+        tvDate.setText(strDate);
     }
 
-    public void setDay(){
+    public void setDay() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date();
         String dayOfTheWeek = sdf.format(d);
-        tv_day_name.setText(dayOfTheWeek);
+        tvWeekDay.setText(dayOfTheWeek);
+    }
+
+    private void setNextPrayer(String prayerName, String prayerTime){
+        tvNextPrayer.setText(prayerName);
+        tvNextPrayTime.setText(prayerTime);
+    }
+
+    private void setCountDown(long waqt){
+
     }
 
 }

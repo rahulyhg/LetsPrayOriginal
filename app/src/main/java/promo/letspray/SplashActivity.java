@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
     private CoordinatorLayout coordinatorLayout;
     private LocationManager locationManager;
     private final static int DISTANCE_UPDATES = 1;
-    private final static int TIME_UPDATES = 24*60*60*1000;
+    private final static int TIME_UPDATES = 24 * 60 * 60 * 1000;
     private static final int PERMISSION_REQUEST_CODE = 1;
     double latitude;
     double longitude;
@@ -72,15 +72,15 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
     @Override
     public void onLocationChanged(Location location) {
 
-        if(location != null){
+        if (location != null) {
             setPrayerTImes(location.getLatitude(), location.getLongitude());
-        }else{
+        } else {
             Snackbar snackbar = Snackbar
                     .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
                     .setAction("RETRY", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                         //   setPrayerTImes(location.getLatitude(), location.getLongitude());
+                            //   setPrayerTImes(location.getLatitude(), location.getLongitude());
                         }
                     });
             snackbar.show();
@@ -179,13 +179,13 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         for (int i = 0; i < prayerNames.size(); i++) {
 
             //Add Prayer time in Database
-            if(i!=4) {
+            if (i != 4) {
                 Log.e("Prayer Time", prayerNames.get(i).toString() + " " + prayerTimes.get(i).toString());
                 Prayer prayer = new Prayer();
                 prayer.setPrayerName((String) prayerNames.get(i));
                 prayer.setPrayerTime((String) prayerTimes.get(i));
                 prayerList.add(prayer);
-            }else{
+            } else {
                 continue;
             }
         }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/afternoon"
     tools:context="promo.letspray.fragment.HomeFragment"
-    android:id="@+id/ui_relative_layout">
+    android:id="@+id/rlFragmentBg">
 
     <RelativeLayout
         android:id="@+id/rlTop"
@@ -118,7 +118,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
-                    android:id="@+id/tv_prayer_name"
+                    android:id="@+id/tvNextPrayer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -140,7 +140,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
-                    android:id="@+id/tv_prayer_time"
+                    android:id="@+id/tvNextPrayTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -162,7 +162,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
-                    android:id="@+id/tv_day"
+                    android:id="@+id/tvWeekDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -184,7 +184,7 @@
                     android:textColor="@color/white_transparent" />
 
                 <TextView
-                    android:id="@+id/tv_date"
+                    android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Asr"
@@ -203,7 +203,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/tv_Ifter"
+                android:id="@+id/llIfter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/left_bottom"
@@ -238,7 +238,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/tv_Seheri"
+                android:id="@+id/llSehri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/right_bottom"
@@ -302,7 +302,7 @@
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
-                android:id="@+id/tv_fajr_time"
+                android:id="@+id/tvFajrTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:00am"
@@ -329,7 +329,7 @@
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
-                android:id="@+id/tv_duhur_time"
+                android:id="@+id/tvDohrTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:00am"
@@ -356,7 +356,7 @@
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
-                android:id="@+id/tv_asr_time"
+                android:id="@+id/tvAsrTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="05:00pm"
@@ -383,7 +383,7 @@
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
-                android:id="@+id/tv_maghrib_time"
+                android:id="@+id/tvMaghribTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="06:30pm"
@@ -409,7 +409,7 @@
                 android:textSize="@dimen/dimTex10" />
 
             <TextView
-                android:id="@+id/tv_isa_time"
+                android:id="@+id/tvIshaTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="08:30pm"
@@ -425,7 +425,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim80"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorHomeBotom"
+        android:background="@color/colorHomeBotomAfternoon"
         android:padding="@dimen/dim5">
 
         <TextView
@@ -441,7 +441,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvHaditFull"
+            android:id="@+id/tvHadithFull"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvHadit"
