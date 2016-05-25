@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         dlMain = (DrawerLayout) findViewById(R.id.dlMain);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         nvDrawer = (NavigationView) findViewById(R.id.nvDrawer);
-
     }
 
 
