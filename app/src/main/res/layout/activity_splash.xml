@@ -12,16 +12,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#000000"
     tools:context="promo.letspray.SplashActivity">
-
-
-    <TextView
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is splash"
-        android:gravity="center"
-        android:textSize="@dimen/dimTex35"
-        android:layout_centerInParent="true"/>
+        />
 
 </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
