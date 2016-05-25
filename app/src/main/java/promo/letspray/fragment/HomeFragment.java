@@ -1,7 +1,9 @@
 package promo.letspray.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
+import promo.letspray.MainActivity;
 import promo.letspray.Model.Prayer;
 import promo.letspray.R;
 import promo.letspray.database.DatabaseHelper;
@@ -33,9 +37,8 @@ public class HomeFragment extends Fragment {
     LinearLayout llIfter, llSehri;
     RelativeLayout rlFragmentBg;
 
-    long fazrWaqtMs, sunriseMs, dohrWaqtMs, asrWaqtMs, maghribWaqtMs, maghribEnd, ishaWaqtMs;
-    Prayer currentPrayer = new Prayer();
-    Prayer nextPrayer = new Prayer();
+    long fazrWaqtMs, sunriseMs, dohrWaqtMs, asrWaqtMs, maghribWaqtMs, maghribEnd, ishaWaqtMs, dayEnd;
+    Context context;
 
     int day_state = 0;
 
@@ -52,8 +55,8 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Reading all contacts
-        day_state = promo.letspray.utility.ApplicationUtils.getDayState();
-
+        day_state = ApplicationUtils.getDayState();
+        context = getActivity();
         // Log.e("Time", day_state+"");
 
     }
@@ -73,6 +76,7 @@ public class HomeFragment extends Fragment {
         setPrayerTime();
         setDate();
         setDay();
+        setDayEnd();
         setNextPrayerTime();
     }
 
@@ -125,29 +129,43 @@ public class HomeFragment extends Fragment {
     private void setNextPrayerTime() {
         Calendar calendar = Calendar.getInstance();
         long currentTimeMs = calendar.getTimeInMillis();
-        Log.e("CurrentTime",currentTimeMs+"");
-        if(currentTimeMs < fazrWaqtMs){
+        Log.e("CurrentTime", currentTimeMs + "");
+        if (currentTimeMs < fazrWaqtMs) {
             //nextPrayer Fazr
-            setNextPrayer("Fazr",tvFajrTime.getText().toString());
-            setCountDown(fazrWaqtMs);
+            setNextPrayer("Fazr", tvFajrTime.getText().toString());
+            setCountDown(fazrWaqtMs-currentTimeMs);
 
-        }else if(currentTimeMs>=fazrWaqtMs&&currentTimeMs<sunriseMs){
+        } else if (currentTimeMs >= fazrWaqtMs && currentTimeMs < sunriseMs) {
             //currentPrayer Fazr
-        }else if(currentTimeMs>=sunriseMs&&currentTimeMs<dohrWaqtMs){
+            setNextPrayer("Fazr", tvFajrTime.getText().toString());
+            setCountDown(sunriseMs-currentTimeMs);
+        } else if (currentTimeMs >= sunriseMs && currentTimeMs < dohrWaqtMs) {
             //nextPrayer Dohr
-        }else if(currentTimeMs>=dohrWaqtMs&&currentTimeMs<asrWaqtMs){
+            setNextPrayer("Dohr", tvDohrTime.getText().toString());
+            setCountDown(dohrWaqtMs-currentTimeMs);
+        } else if (currentTimeMs >= dohrWaqtMs && currentTimeMs < asrWaqtMs) {
             //currentPrayer Dohr
             //nextPrayer Asr
-        }else if(currentTimeMs>=asrWaqtMs&&currentTimeMs<maghribWaqtMs){
+            setNextPrayer("Asr", tvAsrTime.getText().toString());
+            setCountDown(asrWaqtMs-currentTimeMs);
+        } else if (currentTimeMs >= asrWaqtMs && currentTimeMs < maghribWaqtMs) {
             //currentPrayer Asr
             //nextPrayer Maghrib
-        }else if(currentTimeMs>=maghribWaqtMs&&currentTimeMs<maghribEnd){
+            setNextPrayer("Maghrib", tvMaghribTime.getText().toString());
+            setCountDown(maghribWaqtMs-currentTimeMs);
+        } else if (currentTimeMs >= maghribWaqtMs && currentTimeMs < maghribEnd) {
             //currentPrayer Maghrib
             //nextPrayer Isha
-        }else if(currentTimeMs>=maghribEnd&&currentTimeMs<ishaWaqtMs){
+            setNextPrayer("Isha", tvIshaTime.getText().toString());
+            setCountDown(maghribEnd-currentTimeMs);
+        } else if (currentTimeMs >= maghribEnd && currentTimeMs < ishaWaqtMs) {
             //nextPrayer Isha
-        }else if (currentTimeMs>=ishaWaqtMs){
+            setNextPrayer("Isha", tvIshaTime.getText().toString());
+            setCountDown(ishaWaqtMs-currentTimeMs);
+        } else if (currentTimeMs >= ishaWaqtMs&&currentTimeMs<dayEnd) {
             //currentPrayer Isha
+            setNextPrayer("Isha", tvIshaTime.getText().toString());
+            setCountDown(dayEnd-currentTimeMs);
         }
 
     }
@@ -160,33 +178,33 @@ public class HomeFragment extends Fragment {
             if (i == 0) {
                 tvFajrTime.setText(prayers.get(i).getPrayerTime().toString());
                 fazrWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
-                Log.e("Fajr In Ms", fazrWaqtMs +"");
+                Log.e("Fajr In Ms", fazrWaqtMs + "");
             }
             if (i == 1) {
                 sunriseMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
-                Log.e("Sunruse In Ms", sunriseMs+"");
+                Log.e("Sunruse In Ms", sunriseMs + "");
             }
             if (i == 2) {
                 tvDohrTime.setText(prayers.get(i).getPrayerTime().toString());
                 dohrWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
-                Log.e("Dohr In Ms", dohrWaqtMs+"");
+                Log.e("Dohr In Ms", dohrWaqtMs + "");
             }
             if (i == 3) {
                 tvAsrTime.setText(prayers.get(i).getPrayerTime().toString());
                 asrWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
-                Log.e("Asr In Ms", asrWaqtMs+"");
+                Log.e("Asr In Ms", asrWaqtMs + "");
             }
             if (i == 4) {
                 tvMaghribTime.setText(prayers.get(i).getPrayerTime().toString());
                 maghribWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
-                Log.e("Maghrib In Ms", maghribWaqtMs+"");
-                maghribEnd = maghribWaqtMs+1000*60;
-                Log.e("Maghrib End", maghribEnd+"");
+                Log.e("Maghrib In Ms", maghribWaqtMs + "");
+                maghribEnd = maghribWaqtMs + 1000 * 60;
+                Log.e("Maghrib End", maghribEnd + "");
             }
             if (i == 5) {
                 tvIshaTime.setText(prayers.get(i).getPrayerTime().toString());
                 ishaWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
-                Log.e("Isha In Ms", ishaWaqtMs+"");
+                Log.e("Isha In Ms", ishaWaqtMs + "");
             }
 
         }
@@ -207,13 +225,60 @@ public class HomeFragment extends Fragment {
         tvWeekDay.setText(dayOfTheWeek);
     }
 
-    private void setNextPrayer(String prayerName, String prayerTime){
+    private void setNextPrayer(String prayerName, String prayerTime) {
         tvNextPrayer.setText(prayerName);
         tvNextPrayTime.setText(prayerTime);
     }
 
-    private void setCountDown(long waqt){
-
+    private void setCountDown(long waqt) {
+        Log.e("Countdown", "Begin");
+        CounterClass timer = new CounterClass(waqt,
+                1000, context);
+        timer.start();
     }
 
+    private void setDayEnd() {
+        Calendar calendar = Calendar.getInstance();
+        String dateString = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+" "+"23:59:59";
+        SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date postDate = ApplicationUtils.formatDate(dateString, dtFormat);
+        calendar.setTime(postDate);
+        dayEnd = calendar.getTimeInMillis();
+        Log.e("DayEnd", dayEnd + "");
+    }
+
+    public class CounterClass extends CountDownTimer {
+        private static final long HOUR_DIVISOR = 3600000;
+        private static final long MIN_DIVISOR = 60000;
+        private static final long SEC_DIVISOR = 1000;
+        Context context;
+
+        public CounterClass(long millisInFuture, long countDownInterval, Context context) {
+            super(millisInFuture, countDownInterval);
+            this.context = context;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            long millis = millisUntilFinished;
+            long hour = millis/HOUR_DIVISOR;
+            long remaining = (millis%HOUR_DIVISOR);
+            long minute = remaining/MIN_DIVISOR;
+            remaining = remaining%MIN_DIVISOR;
+            long second = remaining/SEC_DIVISOR;
+            String hourStr = String.format("%02d",hour);
+            String minStr = String.format("%02d",minute);
+            String secStr = String.format("%02d",second);
+//            Log.e("Time Remaining",hourStr+":"+minStr+":"+secStr);
+            tvHour.setText(hourStr);
+            tvMinute.setText(minStr);
+            tvSecond.setText(secStr);
+        }
+
+        @Override
+        public void onFinish() {
+
+        }
+
+    }
 }
