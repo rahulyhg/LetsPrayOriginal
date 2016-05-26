@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -87,5 +88,26 @@ public class ApplicationUtils {
             e.printStackTrace();
         }
         return dt;
+    }
+
+    public static long getPrayerTimeInMs(String time){
+        time = modifyTime(time);
+        Calendar calendar = Calendar.getInstance();
+        String dateString = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+" "+time.substring(0,5);
+        SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Date postDate = formatDate(dateString, dtFormat);
+        calendar.setTime(postDate);
+        return calendar.getTimeInMillis();
+    }
+
+    private static String modifyTime(String time){
+        int hour = Integer.parseInt(time.substring(0,2));
+        String ampm = time.substring(6,8);
+        if(ampm.equalsIgnoreCase("am")){
+            return time;
+        }else{
+            hour=hour+12;
+            return hour+":"+time.substring(3);
+        }
     }
 }

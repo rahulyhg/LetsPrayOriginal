@@ -23,10 +23,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static String DATABASE_NAME = "prayerDB";
     SQLiteDatabase db;
 
-    //  Table Name
+    //  Table For Prayer time
     private static final String TABLE_NAME = "prayer";
 
-    //  fields for table
+    //  fields for Prayer time table
 
     public static final String ID = "id";
     public static final String COLUMN_PRAYER_NAMES = "prayer_time";

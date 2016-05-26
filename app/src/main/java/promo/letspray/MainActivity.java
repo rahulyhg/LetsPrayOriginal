@@ -1,28 +1,24 @@
 package promo.letspray;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import promo.letspray.fragment.HomeFragment;
+import promo.letspray.utility.ApplicationUtils;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     DrawerLayout dlMain;
     ActionBarDrawerToggle mDrawerToggle;
@@ -30,6 +26,8 @@ public class MainActivity extends AppCompatActivity{
     NavigationView nvDrawer;
     RelativeLayout rlNavHeaderContent;
     TextView tvHeaderProfileName;
+
+    int day_state = 0;
 
     FragmentManager fragmentManager;
     Context context;
@@ -39,14 +37,17 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+        day_state = ApplicationUtils.getDayState();
 
         initUI();
         initActionBar();
+        setActionbarBackground();
         initDrawer();
         initFragmentManager();
         setupDrawerContent();
         setDrawerHeaderContent();
         setTheme(R.style.MorningTheme);
+
 
     }
 
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity{
         dlMain = (DrawerLayout) findViewById(R.id.dlMain);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         nvDrawer = (NavigationView) findViewById(R.id.nvDrawer);
-
     }
 
 
@@ -63,6 +63,23 @@ public class MainActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+    }
+
+    private void setActionbarBackground(){
+        switch (day_state) {
+            case ApplicationUtils.MORNING:
+                toolbar.setBackgroundColor(getResources().getColor(R.color.morningActionbar));
+                break;
+            case ApplicationUtils.NOON:
+                toolbar.setBackgroundColor(getResources().getColor(R.color.afternoonActionbar));
+                break;
+            case ApplicationUtils.EVENING:
+                toolbar.setBackgroundColor(getResources().getColor(R.color.eveningActionbar));
+                break;
+            case ApplicationUtils.NIGHT:
+                toolbar.setBackgroundColor(getResources().getColor(R.color.nightActionbar));
+                break;
+        }
     }
 
     private void initDrawer() {

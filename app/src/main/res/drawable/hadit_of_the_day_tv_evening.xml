@@ -5,15 +5,13 @@
 
     <!-- view background color -->
     <solid
-        android:color="@color/colorHadith" >
+        android:color="@color/colorHadithEvening" >
     </solid>
 
     <!-- If you want to add some padding -->
     <padding
         android:left="@dimen/dim10"
-        android:top="@dimen/dim5"
-        android:right="@dimen/dim10"
-        android:bottom="@dimen/dim5"    >
+        android:right="@dimen/dim10"    >
     </padding>
 
     <!-- Here is the corner radius -->
