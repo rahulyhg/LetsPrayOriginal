@@ -34,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        day_state = ApplicationUtils.getDayState();
         super.onCreate(savedInstanceState);
+        setStatusbarBackground();
         setContentView(R.layout.activity_main);
         context = this;
-        day_state = ApplicationUtils.getDayState();
 
         initUI();
         initActionBar();
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         initFragmentManager();
         setupDrawerContent();
         setDrawerHeaderContent();
-        setTheme(R.style.MorningTheme);
+        //setTheme(R.style.MorningTheme);
 
 
     }
@@ -63,6 +65,23 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+    }
+
+    private void setStatusbarBackground(){
+        switch (day_state) {
+            case ApplicationUtils.MORNING:
+                setTheme(R.style.MorningTheme);
+                break;
+            case ApplicationUtils.NOON:
+                setTheme(R.style.AfterNoonTheme);
+                break;
+            case ApplicationUtils.EVENING:
+                setTheme(R.style.EveningTheme);
+                break;
+            case ApplicationUtils.NIGHT:
+                setTheme(R.style.NightTheme);
+                break;
+        }
     }
 
     private void setActionbarBackground(){

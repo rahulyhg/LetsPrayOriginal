@@ -81,6 +81,8 @@ public class HomeFragment extends Fragment {
         setDay();
         setDayEnd();
         setNextPrayerTime();
+        setIfterTime();
+        setTvSehriTIme();
 
     }
 
@@ -368,6 +370,14 @@ public class HomeFragment extends Fragment {
 
     private void setCurrentPrayer(String prayerName){
         tvNPTR.setText(prayerName + " Time Remaining");
+    }
+
+    private void setIfterTime(){
+        tvIfterTime.setText(tvMaghribTime.getText().toString());
+    }
+
+    private void setTvSehriTIme(){
+        tvIfterTime.setText(tvFajrTime.getText().toString());
     }
 
     private void setCountDown(long waqt) {
