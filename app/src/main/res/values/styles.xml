@@ -35,7 +35,7 @@
         <item name="android:windowActionBar">false</item>
         <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
         <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/morningStatusbar</item>
+        <item name="colorPrimary">@color/morningrlBottomLayout</item>
         <!--   darker variant for the status bar and contextual app bars -->
         <item name="colorPrimaryDark">@color/morningActionbar</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
@@ -52,7 +52,7 @@
         <item name="android:windowActionBar">false</item>
         <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
         <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/afternoonStatusbar</item>
+        <item name="colorPrimary">@color/afternoonrlBottomLayout</item>
         <!--   darker variant for the status bar and contextual app bars -->
         <item name="colorPrimaryDark">@color/afternoonActionbar</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
@@ -69,7 +69,7 @@
         <item name="android:windowActionBar">false</item>
         <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
         <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/eveningStatusbar</item>
+        <item name="colorPrimary">@color/eveningrlBottomLayout</item>
         <!--   darker variant for the status bar and contextual app bars -->
         <item name="colorPrimaryDark">@color/eveningActionbar</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
@@ -86,7 +86,7 @@
     <item name="android:windowActionBar">false</item>
     <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
     <!-- colorPrimary is used for the default action bar background -->
-    <item name="colorPrimary">@color/nightStatusbar</item>
+    <item name="colorPrimary">@color/nightrlBottomLayout</item>
     <!--   darker variant for the status bar and contextual app bars -->
     <item name="colorPrimaryDark">@color/nightActionbar</item>
     <!--<item name="android:windowTranslucentStatus">true</item>-->
