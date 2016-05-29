@@ -1,4 +1,4 @@
-package promo.letspray.utility;
+package promo.letspray.Utility;
 
 import android.Manifest;
 import android.app.Activity;
