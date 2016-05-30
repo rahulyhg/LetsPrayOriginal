@@ -15,8 +15,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import promo.letspray.fragment.HomeFragment;
 import promo.letspray.Utility.ApplicationUtils;
+import promo.letspray.fragment.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 

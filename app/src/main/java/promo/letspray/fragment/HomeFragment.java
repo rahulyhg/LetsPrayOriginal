@@ -23,8 +23,12 @@ import java.util.Date;
 
 import promo.letspray.Model.Prayer;
 import promo.letspray.R;
-import promo.letspray.database.DatabaseHelper;
 import promo.letspray.Utility.ApplicationUtils;
+import promo.letspray.database.DatabaseHelper;
+<<<<<<< HEAD
+import promo.letspray.Utility.ApplicationUtils;
+=======
+>>>>>>> 06a99e3fbec2aed55a65b1759ae07fff8b57e6d9
 
 /**
  * A simple {@link Fragment} subclass.
