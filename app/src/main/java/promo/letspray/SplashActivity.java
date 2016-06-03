@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         setContentView(R.layout.activity_splash);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                 .coordinatorLayout);
-        initLocation();
+       // initLocation();
         SharedPreferences preferences = getSharedPreferences(StaticData.KEY_PREFERENCE, Context.MODE_PRIVATE);
         boolean isFirstTime = preferences.getBoolean(StaticData.KEY_FIRSTTIME, true);
         if(isFirstTime){

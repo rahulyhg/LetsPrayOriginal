@@ -37,7 +37,7 @@
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/morningrlBottomLayout</item>
         <!--   darker variant for the status bar and contextual app bars -->
-        <item name="colorPrimaryDark">@color/morningActionbar</item>
+        <item name="colorPrimaryDark">@color/morningrlBottomLayout</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/white</item>
@@ -54,7 +54,7 @@
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/afternoonrlBottomLayout</item>
         <!--   darker variant for the status bar and contextual app bars -->
-        <item name="colorPrimaryDark">@color/afternoonActionbar</item>
+        <item name="colorPrimaryDark">@color/afternoonrlBottomLayout</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/white</item>
@@ -71,7 +71,7 @@
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/eveningrlBottomLayout</item>
         <!--   darker variant for the status bar and contextual app bars -->
-        <item name="colorPrimaryDark">@color/eveningActionbar</item>
+        <item name="colorPrimaryDark">@color/eveningrlBottomLayout</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/white</item>
@@ -88,7 +88,7 @@
     <!-- colorPrimary is used for the default action bar background -->
     <item name="colorPrimary">@color/nightrlBottomLayout</item>
     <!--   darker variant for the status bar and contextual app bars -->
-    <item name="colorPrimaryDark">@color/nightActionbar</item>
+    <item name="colorPrimaryDark">@color/nightrlBottomLayout</item>
     <!--<item name="android:windowTranslucentStatus">true</item>-->
     <!--   theme UI controls like checkboxes and text fields -->
     <item name="colorAccent">@color/white</item>

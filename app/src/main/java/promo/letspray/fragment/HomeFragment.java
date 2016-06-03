@@ -1,7 +1,11 @@
 package promo.letspray.fragment;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,14 +25,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import promo.letspray.AlarmReceiver;
 import promo.letspray.Model.Prayer;
 import promo.letspray.R;
+import promo.letspray.StaticData;
 import promo.letspray.Utility.ApplicationUtils;
 import promo.letspray.database.DatabaseHelper;
-<<<<<<< HEAD
-import promo.letspray.Utility.ApplicationUtils;
-=======
->>>>>>> 06a99e3fbec2aed55a65b1759ae07fff8b57e6d9
 
 /**
  * A simple {@link Fragment} subclass.
@@ -205,7 +207,7 @@ public class HomeFragment extends Fragment {
             //cahnge round shape color
             setDrawableFajar();
             //nextPrayer Fazr
-            setNextPrayer("Fazr", tvFajrTime.getText().toString());
+            setNextPrayer("Fazr", tvFajrTime.getText().toString(),fazrWaqtMs);
             setCountDown(fazrWaqtMs-currentTimeMs);
 
         } else if (currentTimeMs >= fazrWaqtMs && currentTimeMs < sunriseMs) {
@@ -214,7 +216,7 @@ public class HomeFragment extends Fragment {
             //cahnge round shape color
             setDrawableFajar();
             //currentPrayer Fazr
-            setNextPrayer("Fazr", tvFajrTime.getText().toString());
+            setNextPrayer("Fazr", tvFajrTime.getText().toString(),fazrWaqtMs);
             setCountDown(sunriseMs-currentTimeMs);
         } else if (currentTimeMs >= sunriseMs && currentTimeMs < dohrWaqtMs) {
             //current
@@ -222,7 +224,7 @@ public class HomeFragment extends Fragment {
             //cahnge round shape color
             setDrawableDuhur();
             //nextPrayer Dohr
-            setNextPrayer("Dohr", tvDohrTime.getText().toString());
+            setNextPrayer("Dohr", tvDohrTime.getText().toString(),dohrWaqtMs);
             setCountDown(dohrWaqtMs-currentTimeMs);
         } else if (currentTimeMs >= dohrWaqtMs && currentTimeMs < asrWaqtMs) {
             //currentPrayer Dohr
@@ -230,7 +232,7 @@ public class HomeFragment extends Fragment {
             //cahnge round shape color
             setDrawableDuhur();
             //nextPrayer Asr
-            setNextPrayer("Asr", tvAsrTime.getText().toString());
+            setNextPrayer("Asr", tvAsrTime.getText().toString(),asrWaqtMs);
             setCountDown(asrWaqtMs-currentTimeMs);
         } else if (currentTimeMs >= asrWaqtMs && currentTimeMs < maghribWaqtMs) {
             //currentPrayer Asr
@@ -238,7 +240,7 @@ public class HomeFragment extends Fragment {
             //cahnge round shape color
             setDrawableAsr();
             //nextPrayer Maghrib
-            setNextPrayer("Maghrib", tvMaghribTime.getText().toString());
+            setNextPrayer("Maghrib", tvMaghribTime.getText().toString(),maghribWaqtMs);
             setCountDown(maghribWaqtMs-currentTimeMs);
         } else if (currentTimeMs >= maghribWaqtMs && currentTimeMs < maghribEnd) {
             //currentPrayer Maghrib
@@ -246,7 +248,7 @@ public class HomeFragment extends Fragment {
             //cahnge round shape color
             setDrawableMagrib();
             //nextPrayer Isha
-            setNextPrayer("Isha", tvIshaTime.getText().toString());
+            setNextPrayer("Isha", tvIshaTime.getText().toString(),ishaWaqtMs);
             setCountDown(maghribEnd-currentTimeMs);
         } else if (currentTimeMs >= maghribEnd && currentTimeMs < ishaWaqtMs) {
             //currentPrayer Maghrib
@@ -254,14 +256,14 @@ public class HomeFragment extends Fragment {
             //cahnge round shape color
             setDrawableIsha();
             //nextPrayer Isha
-            setNextPrayer("Isha", tvIshaTime.getText().toString());
+            setNextPrayer("Isha", tvIshaTime.getText().toString(),ishaWaqtMs);
             setCountDown(ishaWaqtMs-currentTimeMs);
         } else if (currentTimeMs >= ishaWaqtMs&&currentTimeMs<dayEnd) {
             //currentPrayer Maghrib
             setCurrentPrayer("Isha");
             setDrawableIsha();
             //currentPrayer Isha
-            setNextPrayer("Fazr", tvIshaTime.getText().toString());
+            setNextPrayer("Fazr", tvIshaTime.getText().toString(),fazrWaqtMs);
             setCountDown(dayEnd-currentTimeMs);
         }
 
@@ -350,7 +352,19 @@ public class HomeFragment extends Fragment {
             }
 
         }
+        saveAlarm(fazrWaqtMs,dohrWaqtMs,asrWaqtMs,maghribWaqtMs,ishaWaqtMs);
 
+    }
+
+    private void saveAlarm(long alarmTimeFajr,long alarmTimeDuhr,long alarmTimeAsr,long alarmTimeMagrib,long alarmTimeIsha){
+        SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE,context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =preferences.edit();
+        editor.putLong(StaticData.PRAYER_TIME_FAJR,alarmTimeFajr);
+        editor.putLong(StaticData.PRAYER_TIME_DUHR,alarmTimeDuhr);
+        editor.putLong(StaticData.PRAYER_TIME_ASR,alarmTimeAsr);
+        editor.putLong(StaticData.PRAYER_TIME_MAGRIB,alarmTimeMagrib);
+        editor.putLong(StaticData.PRAYER_TIME_ISHA,alarmTimeIsha);
+        editor.commit();
     }
 
     public void setDate() {
@@ -367,9 +381,23 @@ public class HomeFragment extends Fragment {
         tvWeekDay.setText(dayOfTheWeek);
     }
 
-    private void setNextPrayer(String prayerName, String prayerTime) {
+    private void setNextPrayer(String prayerName, String prayerTime,long alarmTime) {
         tvNextPrayer.setText(prayerName);
         tvNextPrayTime.setText(prayerTime);
+
+        SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE,context.MODE_PRIVATE);
+        boolean isAlarm =  preferences.getBoolean(StaticData.IS_ALARMED,false);
+        if(!isAlarm){
+            setAlarm(alarmTime);
+        }
+    }
+
+    private void setAlarm(long alarmTime){
+        Intent myIntent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC,alarmTime, pendingIntent);
     }
 
     private void setCurrentPrayer(String prayerName){
