@@ -39,6 +39,7 @@ public class ApplicationUtils {
         if (result == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
+            requestPermission(activity);
             return false;
         }
     }

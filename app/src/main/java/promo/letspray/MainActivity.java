@@ -1,20 +1,18 @@
 package promo.letspray;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import promo.letspray.Utility.ApplicationUtils;
 import promo.letspray.fragment.HomeFragment;
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
 
-    private void setStatusbarBackground(){
+    private void setStatusbarBackground() {
         switch (day_state) {
             case ApplicationUtils.MORNING:
                 setTheme(R.style.MorningTheme);
@@ -85,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setActionbarBackground(){
+    private void setActionbarBackground() {
         switch (day_state) {
             case ApplicationUtils.MORNING:
                 toolbar.setBackgroundColor(getResources().getColor(R.color.morningActionbar));
@@ -187,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!isLogOut) {
-        // Insert the fragment by replacing any existing fragment
+            // Insert the fragment by replacing any existing fragment
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         }
