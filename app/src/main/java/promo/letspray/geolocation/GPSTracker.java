@@ -65,6 +65,7 @@ public class GPSTracker extends Service implements LocationListener {
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
+                ApplicationUtils.showSettingsAlert(activity);
             } else {
                 if (ApplicationUtils.checkPermission(activity)) {
                     this.canGetLocation = true;
@@ -103,6 +104,7 @@ public class GPSTracker extends Service implements LocationListener {
                     }
                 } else{
                     Toast.makeText(mContext,"Need location to get prayer time. Cannot continue without location",Toast.LENGTH_SHORT);
+                    ApplicationUtils.requestPermission(activity);
                 }
             }
 
@@ -112,6 +114,8 @@ public class GPSTracker extends Service implements LocationListener {
 
         return location;
     }
+
+
 
     /**
      * Stop using GPS listener Calling this function will stop using GPS in your

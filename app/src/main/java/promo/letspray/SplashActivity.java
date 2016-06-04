@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -48,12 +49,15 @@ public class SplashActivity extends AppCompatActivity {
                 .coordinatorLayout);
         context = this;
         // initLocation();
-        SharedPreferences preferences = getSharedPreferences(StaticData.KEY_PREFERENCE, Context.MODE_PRIVATE);
-        boolean isFirstTime = preferences.getBoolean(StaticData.KEY_FIRSTTIME, true);
+//        SharedPreferences preferences = getSharedPreferences(StaticData.KEY_PREFERENCE, Context.MODE_PRIVATE);
+//        boolean isFirstTime = preferences.getBoolean(StaticData.KEY_FIRSTTIME, true);
         GPSTracker gpsTracker = new GPSTracker(context, this);
-        latitude = gpsTracker.getLatitude();
-        longitude = gpsTracker.getLongitude();
-        setPrayerTImes(latitude, longitude);
+        Location location = gpsTracker.getLocation(this);
+        if(location!=null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            setPrayerTImes(latitude, longitude);
+        }
 //        if(isFirstTime){
 //            //Show dialogs
 //            Log.e("KEY", "First TIME");
@@ -65,6 +69,20 @@ public class SplashActivity extends AppCompatActivity {
 //            Intent i = new Intent(getApplicationContext(),MainActivity.class);
 //            startActivity(i);
 //        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ApplicationUtils.GPS_REQUEST_CODE){
+            GPSTracker gpsTracker = new GPSTracker(context, this);
+            Location location = gpsTracker.getLocation(this);
+            if(location!=null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                setPrayerTImes(latitude, longitude);
+            }
+        }
     }
 
     //    private void initLocation() {
@@ -295,7 +313,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
-
+        finish();
     }
 
 }

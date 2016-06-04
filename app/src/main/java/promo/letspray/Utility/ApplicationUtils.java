@@ -2,9 +2,13 @@ package promo.letspray.Utility;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -14,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import promo.letspray.SplashActivity;
 
 /**
  * Created by ppobd_six on 5/15/2016.
@@ -26,6 +32,7 @@ public class ApplicationUtils {
     public static final int NOON = 14;
     public static final int EVENING = 17;
     public static final int NIGHT = 19;
+    public static final int GPS_REQUEST_CODE = 2;
 
 
     /**
@@ -39,7 +46,6 @@ public class ApplicationUtils {
         if (result == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
-            requestPermission(activity);
             return false;
         }
     }
@@ -129,5 +135,36 @@ public class ApplicationUtils {
         Typeface timeTypeface =
                 Typeface.createFromAsset(context.getAssets(), "fonts/hadith_details.ttf");
         return timeTypeface;
+    }
+
+    public static void showSettingsAlert(final Activity activity){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS is settings");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+
+        // Setting Icon to Dialog
+        //alertDialog.setIcon(R.drawable.delete);
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                activity.startActivityForResult(intent,GPS_REQUEST_CODE);
+            }
+        });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }

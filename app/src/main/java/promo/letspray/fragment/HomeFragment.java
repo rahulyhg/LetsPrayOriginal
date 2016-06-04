@@ -386,9 +386,14 @@ public class HomeFragment extends Fragment {
         tvNextPrayTime.setText(prayerTime);
 
         SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE,context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =preferences.edit();
+        Log.e("NEXT PRAYER TIME",alarmTime +"");
         boolean isAlarm =  preferences.getBoolean(StaticData.IS_ALARMED,false);
         if(!isAlarm){
             setAlarm(alarmTime);
+            editor.putLong(StaticData.NEXT_PRAYER_TIME,alarmTime);
+            editor.putBoolean(StaticData.IS_ALARMED,true);
+            editor.commit();
         }
     }
 
@@ -397,7 +402,7 @@ public class HomeFragment extends Fragment {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC,alarmTime, pendingIntent);
+        alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);
     }
 
     private void setCurrentPrayer(String prayerName){
