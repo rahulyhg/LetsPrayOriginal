@@ -1,7 +1,11 @@
 package promo.letspray;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,8 +14,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,6 +122,56 @@ public class MainActivity extends AppCompatActivity {
         // Drawer icon changed
         mDrawerToggle.syncState();
     }
+
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_rateMyapp) {
+            Toast.makeText(this,"RATE MY APP PLEASE",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (id == R.id.action_calendar) {
+            showPopup(MainActivity.this);
+            Toast.makeText(this,"THIS IS CALENDAR",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void showPopup(Activity context) {
+
+        // Inflate the popup_layout.xml
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.calendar_main, null,false);
+        // Creating the PopupWindow
+        final PopupWindow popupWindow = new PopupWindow(
+                layout,800,800);
+
+        popupWindow.setContentView(layout);
+        popupWindow.setHeight(1000);
+        popupWindow.setOutsideTouchable(false);
+        // Clear the default translucent background
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+
+        CalendarView cv = (CalendarView) layout.findViewById(R.id.calendarView1);
+        cv.setBackgroundColor(Color.BLUE);
+
+        popupWindow.showAtLocation(layout, Gravity.TOP,5,170);
+    }
+
+
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, dlMain, toolbar, R.string.txt_nav_open, R.string.txt_nav_close) {

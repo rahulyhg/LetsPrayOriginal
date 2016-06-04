@@ -253,7 +253,7 @@ public class PrayTime {
     }
 
     // ---------------------- Julian Date Functions -----------------------
-    // calculate julian date from a calendar date
+    // calculate julian date from a calendar_main date
     private double julianDate(int year, int month, int day) {
 
         if (month <= 2) {
@@ -270,7 +270,7 @@ public class PrayTime {
         return JD;
     }
 
-    // convert a calendar date to julian date (second method)
+    // convert a calendar_main date to julian date (second method)
     private double calcJD(int year, int month, int day) {
         double J1970 = 2440588.0;
         Date date = new Date(year, month - 1, day);
