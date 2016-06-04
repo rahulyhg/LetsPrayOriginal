@@ -10,7 +10,7 @@
         app:showAsAction="always" />
 
     <item android:id="@+id/action_rateMyapp"
-        app:showAsAction="always"
+        app:showAsAction="collapseActionView"
         android:title="Rate my app" />
 
 
