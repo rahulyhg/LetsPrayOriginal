@@ -19,15 +19,4 @@
             android:icon="@mipmap/ic_launcher"
             android:title="Settings" />
     </group>
-    <group android:id="@+id/nav_footer"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@mipmap/ic_launcher"
-            android:title="Logout"/>
-        <!--<item
-            android:id="@+id/nav_share_friends"
-            android:icon="@drawable/ic_share"
-            android:title="Share with Friends" />-->
-    </group>>
 </menu>

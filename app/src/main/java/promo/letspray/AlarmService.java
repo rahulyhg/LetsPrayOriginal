@@ -39,10 +39,20 @@ public class AlarmService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("Service", "Service Started");
-        if(isAlarmTime()) {
-            notifiy();
-            setNextAlarm();
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(StaticData.KEY_PREFERENCE,getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor =preferences.edit();
+        boolean isAlarmTime =  preferences.getBoolean(StaticData.IS_ALARM_TIME,false);
+        if(!isAlarmTime) {
+            if(isAlarmTime()) {
+                notifiy();
+                Log.e("SERVICE (IF)","Inside isAlarmTime()");
+                setNextAlarm();
+                editor.putBoolean(StaticData.IS_ALARM_TIME,true);
+                editor.commit();
+            }
+
         }else{
+            Log.e("SERVICE (ELSE)","NEXT ALARM TIME");
             notify();
             setNextAlarm();
         }
@@ -79,7 +89,7 @@ public class AlarmService extends Service {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder = new Notification.Builder(getApplicationContext())
                 .setContentTitle("NOTIFICATION")
-                .setContentText("Click for details")
+                .setContentText("It's time for prayer")
                 .setSmallIcon(R.drawable.ic_arrow)
                 .setSound(soundUri)
                 .setLights(0xFF0000FF, 300, 1000);
@@ -98,8 +108,11 @@ public class AlarmService extends Service {
         long currTime=calendar.getTimeInMillis();
         SharedPreferences preferences = getSharedPreferences(StaticData.KEY_PREFERENCE,MODE_PRIVATE);
         long alarmTime_fajr = preferences.getLong(StaticData.PRAYER_TIME_FAJR,0);
+        Log.e("alarmTime_fajr",alarmTime_fajr+"");
         long alarmTime_dohr = preferences.getLong(StaticData.PRAYER_TIME_DUHR,0);
+        Log.e("alarmTime_dohr",alarmTime_dohr+"");
         long alarmTime_asr = preferences.getLong(StaticData.PRAYER_TIME_ASR,0);
+        Log.e("alarmTime_asr",alarmTime_asr+"");
         long alarmTime_maghrib = preferences.getLong(StaticData.PRAYER_TIME_MAGRIB,0);
         long alarmTime_isha = preferences.getLong(StaticData.PRAYER_TIME_ISHA,0);
 //            alarmManager.set(AlarmManager.RTC, time1, pendingIntent);

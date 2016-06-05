@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
     LinearLayout llIfter, llSehri , fajr_layout,duhur_layout,asr_layout,maghrib_layout,isha_layout;
     RelativeLayout rlFragmentBg,rlBottomLayout;
     Toolbar toolbar;
+    long alarmTime;
 
     long fazrWaqtMs, sunriseMs, dohrWaqtMs, asrWaqtMs, maghribWaqtMs, maghribEnd, ishaWaqtMs, dayEnd;
     Context context;
@@ -390,6 +391,7 @@ public class HomeFragment extends Fragment {
         Log.e("NEXT PRAYER TIME",alarmTime +"");
         boolean isAlarm =  preferences.getBoolean(StaticData.IS_ALARMED,false);
         if(!isAlarm){
+            Log.e("NEXT ALARm TIME ..",alarmTime +"");
             setAlarm(alarmTime);
             editor.putLong(StaticData.NEXT_PRAYER_TIME,alarmTime);
             editor.putBoolean(StaticData.IS_ALARMED,true);
@@ -398,8 +400,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void setAlarm(long alarmTime){
+        Log.e("NEXT ALARm TIME ..",alarmTime +"");
         Intent myIntent = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        myIntent.putExtra("TIME",alarmTime);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);

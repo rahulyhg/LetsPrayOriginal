@@ -13,7 +13,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Intent service1 = new Intent(context, AlarmReceiver.class);
+        Intent service1 = new Intent(context, AlarmService.class);
         context.startService(service1);
 
         long l = intent.getLongExtra("TIME",0);
