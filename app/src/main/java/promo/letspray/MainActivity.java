@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void showPopup(Activity context) {
 
         // Inflate the popup_layout.xml
@@ -223,13 +222,17 @@ public class MainActivity extends AppCompatActivity {
 //                fabMain.setVisibility(View.VISIBLE);
 //                isCompanion = false;
                 break;
-            case R.id.nav_prayer_tracker:
-//                isCompanion = true;
-//                fragment = CompanionsFragment.newInstance(user_id, menuItem.getTitle().toString());
-//                fabMain.setVisibility(View.GONE);
-//                UserFragment.isCompanion = true;
+//            case R.id.nav_prayer_tracker:
+////                isCompanion = true;
+////                fragment = CompanionsFragment.newInstance(user_id, menuItem.getTitle().toString());
+////                fabMain.setVisibility(View.GONE);
+////                UserFragment.isCompanion = true;
+//                break;
+            case R.id.nav_islamicEvents:
+//                fragmentClass = ThirdFragment.class;
                 break;
-            case R.id.nav_my_profile:
+
+            case R.id.nav_shareApp:
 //                fragmentClass = ThirdFragment.class;
                 break;
             case R.id.nav_settings:
@@ -244,7 +247,6 @@ public class MainActivity extends AppCompatActivity {
                 fragment = HomeFragment.newInstance();
                 break;
         }
-
         if (!isLogOut) {
         // Insert the fragment by replacing any existing fragment
             fragmentManager = getSupportFragmentManager();

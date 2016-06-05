@@ -387,11 +387,13 @@ public class HomeFragment extends Fragment {
 
         SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE,context.MODE_PRIVATE);
         SharedPreferences.Editor editor =preferences.edit();
-        editor.putLong(StaticData.NEXT_PRAYER_TIME,alarmTime);
         Log.e("NEXT PRAYER TIME",alarmTime +"");
         boolean isAlarm =  preferences.getBoolean(StaticData.IS_ALARMED,false);
         if(!isAlarm){
             setAlarm(alarmTime);
+            editor.putLong(StaticData.NEXT_PRAYER_TIME,alarmTime);
+            editor.putBoolean(StaticData.IS_ALARMED,true);
+            editor.commit();
         }
     }
 

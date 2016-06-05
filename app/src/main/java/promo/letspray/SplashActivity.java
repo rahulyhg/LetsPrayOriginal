@@ -26,6 +26,7 @@ import promo.letspray.Model.Prayer;
 import promo.letspray.Utility.ApplicationUtils;
 import promo.letspray.Utility.PrayTime;
 import promo.letspray.database.DatabaseHelper;
+import promo.letspray.fragment.HomeFragment;
 
 public class SplashActivity extends AppCompatActivity implements LocationListener {
     // Location Variables
@@ -58,11 +59,11 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         boolean isFirstTime = preferences.getBoolean(StaticData.KEY_FIRSTTIME, true);
         if(isFirstTime){
             //Show dialogs
+            initLocation();
             Log.e("KEY", "First TIME");
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean(StaticData.KEY_FIRSTTIME, false);
             editor.commit();
-            initLocation();
         }else{
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
@@ -193,6 +194,36 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
      * @param permissions  list of permissions requested
      * @param grantResults the result of the permissions requested
      */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    /**
+                     * We are good, turn on monitoring
+                     */
+                    if (ApplicationUtils.checkPermission(this)) {
+                        if(isNetworkEnabled){
+                            //this
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
+                        }
+                        if(isGPSEnabled){
+                            //this
+                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
+                        }
+                    } else {
+                        ApplicationUtils.requestPermission(this);
+                    }
+                } else {
+                    /**
+                     * No permissions, block out all activities that require a location to function
+                     */
+                    Toast.makeText(this, "Permission Not Granted.", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
 
     /**
      * Function to show settings alert dialog
@@ -227,38 +258,6 @@ public class SplashActivity extends AppCompatActivity implements LocationListene
         // Showing Alert Message
         alertDialog.show();
     }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    /**
-                     * We are good, turn on monitoring
-                     */
-                    if (ApplicationUtils.checkPermission(this)) {
-                        if(isNetworkEnabled){
-                            //this
-                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
-                        }
-                        if(isGPSEnabled){
-                            //this
-                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
-                        }
-                    } else {
-                        ApplicationUtils.requestPermission(this);
-                    }
-                } else {
-                    /**
-                     * No permissions, block out all activities that require a location to function
-                     */
-                    Toast.makeText(this, "Permission Not Granted.", Toast.LENGTH_LONG).show();
-                }
-                break;
-        }
-    }
-
 
     private void setPrayerTImes(double latitude, double longitude) {
         Log.e("Latitude", latitude + "");
