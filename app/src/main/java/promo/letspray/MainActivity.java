@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         popupWindow.setOutsideTouchable(true);
 
         CalendarView cv = (CalendarView) layout.findViewById(R.id.calendarView1);
-        cv.setBackgroundColor(Color.BLUE);
+        cv.setBackgroundColor(Color.WHITE);
 
         popupWindow.showAtLocation(layout, Gravity.TOP,5,170);
     }
@@ -237,11 +237,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_settings:
 //                fragmentClass = ThirdFragment.class;
-                break;
-            case R.id.nav_logout:
-//                isCompanion = false;
-//                logout();
-//                isLogOut = true;
                 break;
             default:
                 fragment = HomeFragment.newInstance();

@@ -25,17 +25,8 @@ public class SplashActivity extends AppCompatActivity {
     // Location Variables
 
     private CoordinatorLayout coordinatorLayout;
-    //    private LocationManager locationManager;
-//    private final static int DISTANCE_UPDATES = 1;
-//    private final static int TIME_UPDATES = 24*60*60*1000;
-//    private static final int PERMISSION_REQUEST_CODE = 1;
     double latitude;
     double longitude;
-    // flag for GPS status
-//    boolean isGPSEnabled = false;
-
-    // flag for network status
-//    boolean isNetworkEnabled = false;
 
     // Database helper
     DatabaseHelper helper = new DatabaseHelper(this);
@@ -48,9 +39,7 @@ public class SplashActivity extends AppCompatActivity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                 .coordinatorLayout);
         context = this;
-        // initLocation();
-//        SharedPreferences preferences = getSharedPreferences(StaticData.KEY_PREFERENCE, Context.MODE_PRIVATE);
-//        boolean isFirstTime = preferences.getBoolean(StaticData.KEY_FIRSTTIME, true);
+
         GPSTracker gpsTracker = new GPSTracker(context, this);
         Location location = gpsTracker.getLocation(this);
         if(location!=null) {
@@ -58,17 +47,6 @@ public class SplashActivity extends AppCompatActivity {
             longitude = location.getLongitude();
             setPrayerTImes(latitude, longitude);
         }
-//        if(isFirstTime){
-//            //Show dialogs
-//            Log.e("KEY", "First TIME");
-//            SharedPreferences.Editor editor = preferences.edit();
-//            editor.putBoolean(StaticData.KEY_FIRSTTIME, false);
-//            editor.commit();
-//            initLocation();
-//        }else{
-//            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-//            startActivity(i);
-//        }
     }
 
     @Override
@@ -85,166 +63,6 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    //    private void initLocation() {
-//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        // getting GPS status
-//        isGPSEnabled = locationManager
-//                .isProviderEnabled(LocationManager.GPS_PROVIDER);
-//
-//        // getting network status
-//        isNetworkEnabled = locationManager
-//                .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-//
-//        if (ApplicationUtils.checkPermission(this)) {
-//            if (!isGPSEnabled && !isNetworkEnabled) {
-//                Log.e("GPS/NETWORK","Nothing is selceted");
-//                // no network provider is enabled
-//                //show alert dilog to enable network/GPS
-//                showSettingsAlert();
-//            }else {
-//
-//                // First get location from Network Provider
-//                if (isNetworkEnabled){
-//                    Log.e("NETWORK","NETWORK");
-//                    Location location = locationManager.getLastKnownLocation
-//                            (LocationManager.NETWORK_PROVIDER);
-//
-//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
-//                    onLocationChanged(location);
-//                    if (location != null) {
-//                        latitude = location.getLatitude();
-//                        longitude = location.getLongitude();
-//                    }
-//                }
-//
-//                // if GPS Enabled get lat/long using GPS Services
-//                else if (isGPSEnabled){
-//                    Log.e("NETWORK","NETWORK");
-//                    Location location = locationManager.getLastKnownLocation
-//                            (LocationManager.GPS_PROVIDER);
-//
-//                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
-//                    onLocationChanged(location);
-//                    if (location != null) {
-//                        latitude = location.getLatitude();
-//                        longitude = location.getLongitude();
-//                    }
-//                }
-//            }
-//
-//
-//        } else {
-//            ApplicationUtils.requestPermission(this);
-//        }
-//    }
-//
-//
-//
-//    /**
-//     * Monitor for location changes
-//     *
-//     * @param location holds the new location
-//     */
-//    @Override
-//    public void onLocationChanged(Location location) {
-//
-//        if(location != null){
-//            setPrayerTImes(location.getLatitude(), location.getLongitude());
-//        }else{
-//            Snackbar snackbar = Snackbar
-//                    .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
-//                    .setAction("RETRY", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                         //   setPrayerTImes(location.getLatitude(), location.getLongitude());
-//                        }
-//                    });
-//            snackbar.show();
-//        }
-//    }
-//
-//    /**
-//     * GPS turned off, stop watching for updates.
-//     *
-//     * @param provider contains data on which provider was disabled
-//     */
-//    @Override
-//    public void onProviderDisabled(String provider) {
-//        if (ApplicationUtils.checkPermission(this)) {
-//            locationManager.removeUpdates(this);
-//        } else {
-//            ApplicationUtils.requestPermission(this);
-//        }
-//    }
-//
-//    /**
-//     * GPS turned back on, re-enable monitoring
-//     *
-//     * @param provider contains data on which provider was enabled
-//     */
-//    @Override
-//    public void onProviderEnabled(String provider) {
-//        if (ApplicationUtils.checkPermission(this)) {
-//            if(isNetworkEnabled){
-//                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
-//            }
-//            if(isGPSEnabled){
-//                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_UPDATES, DISTANCE_UPDATES, this);
-//            }
-//        } else {
-//            ApplicationUtils.requestPermission(this);
-//        }
-//    }
-//
-//    @Override
-//    public void onStatusChanged(String provider, int status, Bundle extras) {
-//        // TODO Auto-generated method stub
-//
-//    }
-//
-//    /**
-//     * Monitor for permission changes.
-//     *
-//     * @param requestCode  passed via PERMISSION_REQUEST_CODE
-//     * @param permissions  list of permissions requested
-//     * @param grantResults the result of the permissions requested
-//     */
-//
-//    /**
-//     * Function to show settings alert dialog
-//     * */
-//    public void showSettingsAlert(){
-//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-//
-//        // Setting Dialog Title
-//        alertDialog.setTitle("GPS is settings");
-//
-//        // Setting Dialog Message
-//        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-//
-//        // Setting Icon to Dialog
-//        //alertDialog.setIcon(R.drawable.delete);
-//
-//        // On pressing Settings button
-//        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog,int which) {
-//                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                SplashActivity.this.startActivity(intent);
-//            }
-//        });
-//
-//        // on pressing cancel button
-//        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//
-//        // Showing Alert Message
-//        alertDialog.show();
-//    }
-//
-//
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -265,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
                     /**
                      * No permissions, block out all activities that require a location to function
                      */
-                    Toast.makeText(this, "Sorry. Cannot continue without location", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Sorry. Cannot continue without location", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
