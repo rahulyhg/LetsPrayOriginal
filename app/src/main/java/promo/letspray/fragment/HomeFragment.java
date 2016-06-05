@@ -40,10 +40,10 @@ import promo.letspray.database.DatabaseHelper;
 public class HomeFragment extends Fragment {
     TextView tvFajrTime, tvDohrTime, tvAsrTime, tvMaghribTime, tvIshaTime, tvHadithFull, tv_more,
             tvIfterTime, tvSehriTIme, tvIfter, tvSehri, tvNextPrayer, tvNextPrayTime, tvWeekDay, tvDate, tvHour,
-            tvMinute, tvSecond,tvHadit,tvNPTR,tvSecondText, fajr,dohr,asr,magrib,isha;
+            tvMinute, tvSecond, tvHadit, tvNPTR, tvSecondText, fajr, dohr, asr, magrib, isha;
 
-    LinearLayout llIfter, llSehri , fajr_layout,duhur_layout,asr_layout,maghrib_layout,isha_layout;
-    RelativeLayout rlFragmentBg,rlBottomLayout;
+    LinearLayout llIfter, llSehri, fajr_layout, duhur_layout, asr_layout, maghrib_layout, isha_layout;
+    RelativeLayout rlFragmentBg, rlBottomLayout;
     Toolbar toolbar;
 
     long fazrWaqtMs, sunriseMs, dohrWaqtMs, asrWaqtMs, maghribWaqtMs, maghribEnd, ishaWaqtMs, dayEnd;
@@ -120,16 +120,16 @@ public class HomeFragment extends Fragment {
         tvSecond = (TextView) view.findViewById(R.id.tvSecond);
         tvHadit = (TextView) view.findViewById(R.id.tvHadit);
         tvNPTR = (TextView) view.findViewById(R.id.tvNPTR);
-        tvSecondText=(TextView) view.findViewById(R.id.tvSecondText);
+        tvSecondText = (TextView) view.findViewById(R.id.tvSecondText);
         llIfter = (LinearLayout) view.findViewById(R.id.llIfter);
         llSehri = (LinearLayout) view.findViewById(R.id.llSehri);
         rlFragmentBg = (RelativeLayout) view.findViewById(R.id.rlFragmentBg);
         rlBottomLayout = (RelativeLayout) view.findViewById(R.id.rlBottomLayout);
-        fajr_layout = (LinearLayout)view.findViewById(R.id.fajr_layout);
-        duhur_layout = (LinearLayout)view.findViewById(R.id.duhur_layout);
-        asr_layout = (LinearLayout)view.findViewById(R.id.asr_layout);
-        maghrib_layout = (LinearLayout)view.findViewById(R.id.maghrib_layout);
-        isha_layout = (LinearLayout)view.findViewById(R.id.isha_layout);
+        fajr_layout = (LinearLayout) view.findViewById(R.id.fajr_layout);
+        duhur_layout = (LinearLayout) view.findViewById(R.id.duhur_layout);
+        asr_layout = (LinearLayout) view.findViewById(R.id.asr_layout);
+        maghrib_layout = (LinearLayout) view.findViewById(R.id.maghrib_layout);
+        isha_layout = (LinearLayout) view.findViewById(R.id.isha_layout);
 
         setBackgroundNdBarColor();
         setTypeface();
@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void setTypeface(){
+    private void setTypeface() {
         tvHour.setTypeface(ApplicationUtils.setTimeTypeface(context));
         tvMinute.setTypeface(ApplicationUtils.setTimeTypeface(context));
         tvSecond.setTypeface(ApplicationUtils.setTimeTypeface(context));
@@ -191,7 +191,7 @@ public class HomeFragment extends Fragment {
                 rlFragmentBg.setBackgroundResource(R.drawable.night);
                 tvHadit.setBackgroundResource(R.drawable.hadit_of_the_day_tv_night);
                 tvHadithFull.setText("HADITH AT NIGHT..............................");
-               // rlBottomLayout.setBackgroundColor(Color.parseColor("#2d003d"));
+                // rlBottomLayout.setBackgroundColor(Color.parseColor("#2d003d"));
                 rlBottomLayout.setBackgroundColor(getResources().getColor(R.color.nightrlBottomLayout));
                 break;
         }
@@ -202,120 +202,70 @@ public class HomeFragment extends Fragment {
         long currentTimeMs = calendar.getTimeInMillis();
         Log.e("CurrentTime", currentTimeMs + "");
         if (currentTimeMs < fazrWaqtMs) {
-            //current
             setCurrentPrayer("Fajr");
-            //cahnge round shape color
-            setDrawableFajar();
-            //nextPrayer Fazr
-            setNextPrayer("Fazr", tvFajrTime.getText().toString(),fazrWaqtMs);
-            setCountDown(fazrWaqtMs-currentTimeMs);
+            setDrawableGreenCircle(fajr_layout);
+            setDrawableWhiteCircle(duhur_layout, asr_layout, maghrib_layout, isha_layout);
+            setNextPrayer("Fazr", tvFajrTime.getText().toString(), fazrWaqtMs);
+            setCountDown(fazrWaqtMs - currentTimeMs);
 
         } else if (currentTimeMs >= fazrWaqtMs && currentTimeMs < sunriseMs) {
-            //current
             setCurrentPrayer("Fajr");
-            //cahnge round shape color
-            setDrawableFajar();
-            //currentPrayer Fazr
-            setNextPrayer("Fazr", tvFajrTime.getText().toString(),fazrWaqtMs);
-            setCountDown(sunriseMs-currentTimeMs);
+            setDrawableGreenCircle(fajr_layout);
+            setDrawableWhiteCircle(duhur_layout, asr_layout, maghrib_layout, isha_layout);
+            setNextPrayer("Fazr", tvFajrTime.getText().toString(), fazrWaqtMs);
+            setCountDown(sunriseMs - currentTimeMs);
         } else if (currentTimeMs >= sunriseMs && currentTimeMs < dohrWaqtMs) {
-            //current
             setCurrentPrayer("Duhr");
-            //cahnge round shape color
-            setDrawableDuhur();
-            //nextPrayer Dohr
-            setNextPrayer("Dohr", tvDohrTime.getText().toString(),dohrWaqtMs);
-            setCountDown(dohrWaqtMs-currentTimeMs);
+            setDrawableGreenCircle(duhur_layout);
+            setDrawableWhiteCircle(fajr_layout, asr_layout, maghrib_layout, isha_layout);
+            setNextPrayer("Dohr", tvDohrTime.getText().toString(), dohrWaqtMs);
+            setCountDown(dohrWaqtMs - currentTimeMs);
         } else if (currentTimeMs >= dohrWaqtMs && currentTimeMs < asrWaqtMs) {
-            //currentPrayer Dohr
             setCurrentPrayer("Duhr");
-            //cahnge round shape color
-            setDrawableDuhur();
-            //nextPrayer Asr
-            setNextPrayer("Asr", tvAsrTime.getText().toString(),asrWaqtMs);
-            setCountDown(asrWaqtMs-currentTimeMs);
+            setDrawableGreenCircle(duhur_layout);
+            setDrawableWhiteCircle(fajr_layout, asr_layout, maghrib_layout, isha_layout);
+            setNextPrayer("Asr", tvAsrTime.getText().toString(), asrWaqtMs);
+            setCountDown(asrWaqtMs - currentTimeMs);
         } else if (currentTimeMs >= asrWaqtMs && currentTimeMs < maghribWaqtMs) {
-            //currentPrayer Asr
             setCurrentPrayer("Asr");
-            //cahnge round shape color
-            setDrawableAsr();
-            //nextPrayer Maghrib
-            setNextPrayer("Maghrib", tvMaghribTime.getText().toString(),maghribWaqtMs);
-            setCountDown(maghribWaqtMs-currentTimeMs);
+            setDrawableGreenCircle(asr_layout);
+            setDrawableWhiteCircle(fajr_layout, duhur_layout, maghrib_layout, isha_layout);
+            setNextPrayer("Maghrib", tvMaghribTime.getText().toString(), maghribWaqtMs);
+            setCountDown(maghribWaqtMs - currentTimeMs);
         } else if (currentTimeMs >= maghribWaqtMs && currentTimeMs < maghribEnd) {
-            //currentPrayer Maghrib
             setCurrentPrayer("Maghrib");
-            //cahnge round shape color
-            setDrawableMagrib();
-            //nextPrayer Isha
-            setNextPrayer("Isha", tvIshaTime.getText().toString(),ishaWaqtMs);
-            setCountDown(maghribEnd-currentTimeMs);
+            setDrawableGreenCircle(maghrib_layout);
+            setDrawableWhiteCircle(fajr_layout, asr_layout, duhur_layout, isha_layout);
+            setNextPrayer("Isha", tvIshaTime.getText().toString(), ishaWaqtMs);
+            setCountDown(maghribEnd - currentTimeMs);
         } else if (currentTimeMs >= maghribEnd && currentTimeMs < ishaWaqtMs) {
-            //currentPrayer Maghrib
             setCurrentPrayer("Isha");
-            //cahnge round shape color
-            setDrawableIsha();
-            //nextPrayer Isha
-            setNextPrayer("Isha", tvIshaTime.getText().toString(),ishaWaqtMs);
-            setCountDown(ishaWaqtMs-currentTimeMs);
-        } else if (currentTimeMs >= ishaWaqtMs&&currentTimeMs<dayEnd) {
-            //currentPrayer Maghrib
+            setDrawableGreenCircle(isha_layout);
+            setDrawableWhiteCircle(fajr_layout, asr_layout, maghrib_layout, duhur_layout);
+            setNextPrayer("Isha", tvIshaTime.getText().toString(), ishaWaqtMs);
+            setCountDown(ishaWaqtMs - currentTimeMs);
+        } else if (currentTimeMs >= ishaWaqtMs && currentTimeMs < dayEnd) {
             setCurrentPrayer("Isha");
-            setDrawableIsha();
-            //currentPrayer Isha
-            setNextPrayer("Fazr", tvIshaTime.getText().toString(),fazrWaqtMs);
-            setCountDown(dayEnd-currentTimeMs);
+            setDrawableGreenCircle(isha_layout);
+            setDrawableWhiteCircle(fajr_layout, asr_layout, maghrib_layout, duhur_layout);
+            setNextPrayer("Fazr", tvIshaTime.getText().toString(), fazrWaqtMs);
+            setCountDown(dayEnd - currentTimeMs);
         }
 
     }
 
-    public void setDrawableFajar(){
-
-        fajr_layout.setBackgroundResource(R.drawable.border_green_bg_transparent_green_rounded);
-        duhur_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        asr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        maghrib_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        isha_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
+    private void setDrawableWhiteCircle(LinearLayout ll1, LinearLayout ll2, LinearLayout ll3, LinearLayout ll4) {
+        ll1.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
+        ll2.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
+        ll3.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
+        ll4.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
     }
 
-    public void setDrawableDuhur(){
-
-        fajr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        duhur_layout.setBackgroundResource(R.drawable.border_green_bg_transparent_green_rounded);
-        asr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        maghrib_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        isha_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-    }
-
-    public void setDrawableAsr(){
-
-        fajr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        duhur_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        asr_layout.setBackgroundResource(R.drawable.border_green_bg_transparent_green_rounded);
-        maghrib_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        isha_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-    }
-
-    public void setDrawableMagrib(){
-
-        fajr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        duhur_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        asr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        maghrib_layout.setBackgroundResource(R.drawable.border_green_bg_transparent_green_rounded);
-        isha_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-    }
-
-    public void setDrawableIsha(){
-
-        fajr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        duhur_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        asr_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        maghrib_layout.setBackgroundResource(R.drawable.border_white_bg_transparent_white_rounded);
-        isha_layout.setBackgroundResource(R.drawable.border_green_bg_transparent_green_rounded);
+    private void setDrawableGreenCircle(LinearLayout linearLayout) {
+        linearLayout.setBackgroundResource(R.drawable.border_green_bg_transparent_green_rounded);
     }
 
     public void setPrayerTime() {
-
         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
         ArrayList<Prayer> prayers = databaseHelper.getPrayer();
         for (int i = 0; i < prayers.size(); i++) {
@@ -342,7 +292,7 @@ public class HomeFragment extends Fragment {
                 tvMaghribTime.setText(prayers.get(i).getPrayerTime().toString());
                 maghribWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
                 Log.e("Maghrib In Ms", maghribWaqtMs + "");
-                maghribEnd = maghribWaqtMs + 1000 *60* 45;
+                maghribEnd = maghribWaqtMs + 1000 * 60 * 45;
                 Log.e("Maghrib End", maghribEnd + "");
             }
             if (i == 5) {
@@ -350,20 +300,19 @@ public class HomeFragment extends Fragment {
                 ishaWaqtMs = ApplicationUtils.getPrayerTimeInMs(prayers.get(i).getPrayerTime().toString());
                 Log.e("Isha In Ms", ishaWaqtMs + "");
             }
-
         }
-        saveAlarm(fazrWaqtMs,dohrWaqtMs,asrWaqtMs,maghribWaqtMs,ishaWaqtMs);
+        saveAlarm(fazrWaqtMs, dohrWaqtMs, asrWaqtMs, maghribWaqtMs, ishaWaqtMs);
 
     }
 
-    private void saveAlarm(long alarmTimeFajr,long alarmTimeDuhr,long alarmTimeAsr,long alarmTimeMagrib,long alarmTimeIsha){
-        SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE,context.MODE_PRIVATE);
-        SharedPreferences.Editor editor =preferences.edit();
-        editor.putLong(StaticData.PRAYER_TIME_FAJR,alarmTimeFajr);
-        editor.putLong(StaticData.PRAYER_TIME_DUHR,alarmTimeDuhr);
-        editor.putLong(StaticData.PRAYER_TIME_ASR,alarmTimeAsr);
-        editor.putLong(StaticData.PRAYER_TIME_MAGRIB,alarmTimeMagrib);
-        editor.putLong(StaticData.PRAYER_TIME_ISHA,alarmTimeIsha);
+    private void saveAlarm(long alarmTimeFajr, long alarmTimeDuhr, long alarmTimeAsr, long alarmTimeMagrib, long alarmTimeIsha) {
+        SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(StaticData.PRAYER_TIME_FAJR, alarmTimeFajr);
+        editor.putLong(StaticData.PRAYER_TIME_DUHR, alarmTimeDuhr);
+        editor.putLong(StaticData.PRAYER_TIME_ASR, alarmTimeAsr);
+        editor.putLong(StaticData.PRAYER_TIME_MAGRIB, alarmTimeMagrib);
+        editor.putLong(StaticData.PRAYER_TIME_ISHA, alarmTimeIsha);
         editor.commit();
     }
 
@@ -381,39 +330,39 @@ public class HomeFragment extends Fragment {
         tvWeekDay.setText(dayOfTheWeek);
     }
 
-    private void setNextPrayer(String prayerName, String prayerTime,long alarmTime) {
+    private void setNextPrayer(String prayerName, String prayerTime, long alarmTime) {
         tvNextPrayer.setText(prayerName);
         tvNextPrayTime.setText(prayerTime);
 
-        SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE,context.MODE_PRIVATE);
-        SharedPreferences.Editor editor =preferences.edit();
-        Log.e("NEXT PRAYER TIME",alarmTime +"");
-        boolean isAlarm =  preferences.getBoolean(StaticData.IS_ALARMED,false);
-        if(!isAlarm){
+        SharedPreferences preferences = context.getSharedPreferences(StaticData.KEY_PREFERENCE, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        Log.e("NEXT PRAYER TIME", alarmTime + "");
+        boolean isAlarm = preferences.getBoolean(StaticData.IS_ALARMED, false);
+        if (!isAlarm) {
             setAlarm(alarmTime);
-            editor.putLong(StaticData.NEXT_PRAYER_TIME,alarmTime);
-            editor.putBoolean(StaticData.IS_ALARMED,true);
+            editor.putLong(StaticData.NEXT_PRAYER_TIME, alarmTime);
+            editor.putBoolean(StaticData.IS_ALARMED, true);
             editor.commit();
         }
     }
 
-    private void setAlarm(long alarmTime){
+    private void setAlarm(long alarmTime) {
         Intent myIntent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);
     }
 
-    private void setCurrentPrayer(String prayerName){
+    private void setCurrentPrayer(String prayerName) {
         tvNPTR.setText(prayerName + " Time Remaining");
     }
 
-    private void setIfterTime(){
+    private void setIfterTime() {
         tvIfterTime.setText(tvMaghribTime.getText().toString());
     }
 
-    private void setTvSehriTIme(){
+    private void setTvSehriTIme() {
         tvIfterTime.setText(tvFajrTime.getText().toString());
     }
 
@@ -426,7 +375,7 @@ public class HomeFragment extends Fragment {
 
     private void setDayEnd() {
         Calendar calendar = Calendar.getInstance();
-        String dateString = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH)+" "+"23:59:59";
+        String dateString = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " " + "23:59:59";
         SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date postDate = ApplicationUtils.formatDate(dateString, dtFormat);
         calendar.setTime(postDate);
@@ -448,14 +397,14 @@ public class HomeFragment extends Fragment {
         @Override
         public void onTick(long millisUntilFinished) {
             long millis = millisUntilFinished;
-            long hour = millis/HOUR_DIVISOR;
-            long remaining = (millis%HOUR_DIVISOR);
-            long minute = remaining/MIN_DIVISOR;
-            remaining = remaining%MIN_DIVISOR;
-            long second = remaining/SEC_DIVISOR;
-            String hourStr = String.format("%02d",hour);
-            String minStr = String.format("%02d",minute);
-            String secStr = String.format("%02d",second);
+            long hour = millis / HOUR_DIVISOR;
+            long remaining = (millis % HOUR_DIVISOR);
+            long minute = remaining / MIN_DIVISOR;
+            remaining = remaining % MIN_DIVISOR;
+            long second = remaining / SEC_DIVISOR;
+            String hourStr = String.format("%02d", hour);
+            String minStr = String.format("%02d", minute);
+            String secStr = String.format("%02d", second);
 //            Log.e("Time Remaining",hourStr+":"+minStr+":"+secStr);
             tvHour.setText(hourStr);
             tvMinute.setText(minStr);
@@ -464,7 +413,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onFinish() {
-                setNextPrayerTime();
+            setNextPrayerTime();
         }
 
     }
