@@ -6,8 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -25,10 +23,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import promo.letspray.AlarmReceiver;
+import promo.letspray.reciever.AlarmReceiver;
 import promo.letspray.Model.Prayer;
 import promo.letspray.R;
-import promo.letspray.StaticData;
+import promo.letspray.data.StaticData;
 import promo.letspray.Utility.ApplicationUtils;
 import promo.letspray.database.DatabaseHelper;
 
@@ -212,7 +210,7 @@ public class HomeFragment extends Fragment {
             setCurrentPrayer("Fajr");
             setDrawableGreenCircle(fajr_layout);
             setDrawableWhiteCircle(duhur_layout, asr_layout, maghrib_layout, isha_layout);
-            setNextPrayer("Fazr", tvFajrTime.getText().toString(), fazrWaqtMs);
+            setNextPrayer("Fazr", tvFajrTime.getText().toString(), dohrWaqtMs);
             setCountDown(sunriseMs - currentTimeMs);
         } else if (currentTimeMs >= sunriseMs && currentTimeMs < dohrWaqtMs) {
             setCurrentPrayer("Duhr");
@@ -340,7 +338,7 @@ public class HomeFragment extends Fragment {
         boolean isAlarm = preferences.getBoolean(StaticData.IS_ALARMED, false);
         if (!isAlarm) {
             setAlarm(alarmTime);
-            editor.putLong(StaticData.NEXT_PRAYER_TIME, alarmTime);
+            editor.putLong(StaticData.ALARM_TIME, alarmTime);
             editor.putBoolean(StaticData.IS_ALARMED, true);
             editor.commit();
         }
@@ -348,7 +346,7 @@ public class HomeFragment extends Fragment {
 
     private void setAlarm(long alarmTime) {
         Intent myIntent = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);

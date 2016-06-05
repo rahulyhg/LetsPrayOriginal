@@ -41,10 +41,9 @@ public class SplashActivity extends AppCompatActivity {
         context = this;
 
         GPSTracker gpsTracker = new GPSTracker(context, this);
-        Location location = gpsTracker.getLocation(this);
-        if(location!=null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
+        latitude = gpsTracker.getLatitude();
+        longitude = gpsTracker.getLongitude();
+        if(latitude!=0.0&&longitude!=0.0) {
             setPrayerTImes(latitude, longitude);
         }
     }
@@ -54,10 +53,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ApplicationUtils.GPS_REQUEST_CODE){
             GPSTracker gpsTracker = new GPSTracker(context, this);
-            Location location = gpsTracker.getLocation(this);
-            if(location!=null) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+            latitude = gpsTracker.getLatitude();
+            longitude = gpsTracker.getLongitude();
+            if(latitude!=0.0&&longitude!=0.0) {
                 setPrayerTImes(latitude, longitude);
             }
         }
@@ -84,6 +82,7 @@ public class SplashActivity extends AppCompatActivity {
                      * No permissions, block out all activities that require a location to function
                      */
                     Toast.makeText(this, "Sorry. Cannot continue without location", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 break;
         }

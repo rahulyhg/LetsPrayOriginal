@@ -1,4 +1,4 @@
-package promo.letspray;
+package promo.letspray.data;
 
 /**
  * Created by wali on 5/29/2016.
@@ -12,7 +12,8 @@ public class StaticData {
     public static final String PRAYER_TIME_MAGRIB = "prayer_time_magrib";
     public static final String PRAYER_TIME_ISHA = "prayer_time_isha";
     public static final String NEXT_PRAYER_TIME = "next_prayer_time";
-    public static final String IS_ALARM_TIME = "alarm_time";
+    public static final String IS_ALARM_TIME = "is_alarm_time";
+    public static final String ALARM_TIME = "alarm_time";
 
     public static final String IS_ALARMED = "isalarmed";
 }

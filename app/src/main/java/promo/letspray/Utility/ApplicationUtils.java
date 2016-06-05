@@ -57,12 +57,12 @@ public class ApplicationUtils {
 
         /**
          * Previous denials will warrant a rationale for the user to help convince them.
-         */
+
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Toast.makeText(activity, "This app relies on location data for it's main functionality. Please enable GPS data to access all features.", Toast.LENGTH_LONG).show();
-        } else {
+        } else {*/
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
-        }
+//        }
     }
 
     public static int getDayState() {

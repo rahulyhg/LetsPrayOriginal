@@ -1,4 +1,4 @@
-package promo.letspray;
+package promo.letspray.service;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -17,7 +17,9 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-import promo.letspray.fragment.HomeFragment;
+import promo.letspray.R;
+import promo.letspray.data.StaticData;
+import promo.letspray.reciever.AlarmReceiver;
 
 /**
  * Created by wali on 6/2/2016.

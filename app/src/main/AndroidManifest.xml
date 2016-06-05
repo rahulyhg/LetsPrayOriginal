@@ -27,10 +27,10 @@
         </activity>
 
         <service
-            android:name=".AlarmService"
+            android:name=".service.AlarmService"
             android:enabled="true" />
 
-        <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".reciever.AlarmReceiver" />
 
     </application>
 
